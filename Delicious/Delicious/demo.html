@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .main {
+            text-align: center;
+        }
+
+        .image-main {
+            width: 400px;
+            height: 400px;
+        }
+
+        .list-img {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .image-in-list {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .prev {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            border: 1px solid black;
+        }
+
+        .next {
+            position: absolute;
+            top: 30%;
+            right: 30%;
+            border: 1px solid black;
+        }
+
+        .active {
+            border: 2px solid crimson;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <img src="assets/img/chefs-bg.jpg" alt="" class="image-main"/>
+    <div class="control prev">Prev</div>
+    <div class="control next">Next</div>
+</div>
+<div class="list-img">
+    <div><img src="assets/img/about.jpg" alt="" class="image-in-list"/></div>
+    <div><img src="assets/img/chefs-bg.jpg" alt="" class="image-in-list"/></div>
+    <div><img src="assets/img/event-birthday.jpg" alt="" class="image-in-list"/></div>
+    <div><img src="assets/img/event-private.jpg" alt="" class="image-in-list"/></div>
+</div>
+<script>
+    let imgFeature = document.querySelector(".image-main")
+    let listImg = document.querySelectorAll(".list-img img")
+    let prevBtn = document.querySelector(".prev")
+    let nextBtn = document.querySelector(".next")
+    let currentIndex = 0;
+
+    function updateImageByIndex(index) {
+        document.querySelectorAll('.list-img div').forEach(item => {
+            item.classList.remove("active")
+        })
+        currentIndex = index
+        imgFeature.src = listImg[index].getAttribute('src')
+        listImg[index].parentElement.classList.add('active')
+    }
+
+    listImg.forEach((imgElement, index) => {
+        imgElement.addEventListener('click', e => {
+            updateImageByIndex(index)
+        })
+    })
+    prevBtn.addEventListener("click", e => {
+        if (currentIndex === 0) {
+            currentIndex = listImg.length - 1
+        } else {
+            currentIndex--
+        }
+        updateImageByIndex(currentIndex)
+    })
+    nextBtn.addEventListener("click", e => {
+        if (currentIndex === listImg.length) {
+            currentIndex = 0
+        } else {
+            currentIndex++
+        }
+        updateImageByIndex(currentIndex)
+    })
+    updateImageByIndex(0)
+</script>
+</body>
+</html>
