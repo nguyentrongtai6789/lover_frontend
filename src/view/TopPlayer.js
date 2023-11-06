@@ -1,5 +1,4 @@
 import {useState} from "react";
-
 export function TopPlayer() {
     const [state, setState] = useState(true);
     function changeBXH(boolean) {
@@ -57,10 +56,12 @@ export function TopPlayer() {
                                     <span style={{position:"absolute", top:18, right:0}}>1000 giờ</span>
                                 </div>
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={()=>changeBXH(true)}>Top được thuê nhiều nhất</button>
+                            <div className="modal-footer d-flex justify-content-between">
+                                <button type="button" className="btn btn-secondary" onClick={()=>changeBXH(true)} style={{ backgroundColor: '#CCCCCC', color:'black'  }}>Top được thuê nhiều nhất</button>
                                 <br/>
-                                <button type="button" className="btn btn-primary" onClick={()=>changeBXH(false)}>Top được donate nhiều nhất</button>
+                                <button type="button" className="btn btn-primary" style={{ backgroundColor: '#f0564a' }} onClick={() => changeBXH(false)}>
+                                    Top được donate nhiều nhất
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -119,10 +120,12 @@ export function TopPlayer() {
                                     <span style={{position:"absolute", top:18, right:0}}>5,000,000 vnđ</span>
                                 </div>
                             </div>
-                            <div className="modal-footer">
+                            <div className="modal-footer d-flex justify-content-between">
                                 <button type="button" className="btn btn-secondary" onClick={()=>changeBXH(true)}>Top được thuê nhiều nhất</button>
                                 <br/>
-                                <button type="button" className="btn btn-primary" onClick={()=>changeBXH(false)}>Top được donate nhiều nhất</button>
+                                <button type="button" className="btn btn-primary" style={{   backgroundColor: '#CCCCCC', color:'black'   }} onClick={() => changeBXH(false)}>
+                                    Top được donate nhiều nhất
+                                </button>
                             </div>
                         </div>
                     </div>
