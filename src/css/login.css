@@ -1,0 +1,66 @@
+/* Để trung tâm nội dung trong modal */
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Để làm cho modal có viền trắng */
+.modal-content {
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
+/* Để thay đổi màu nền tiêu đề và vị trí chữ trung tâm */
+/*.modal-header {*/
+/*    background-color: #3B5998; !* Màu của Facebook *!*/
+/*    text-align: center;*/
+/*    border: none;*/
+/*}*/
+
+/* Để thay đổi màu và kích thước của tiêu đề */
+.modal-header p {
+    color: #fff;
+    font-size: 25px;
+}
+
+/* Để làm cho input có viền và màu nền nhạt hơn */
+.modal-body input {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+/* Để thay đổi khoảng cách giữa các input */
+.modal-body input + input {
+    margin-top: 10px;
+}
+
+/* Để làm cho button có màu nền xanh tương tự Facebook */
+.modal-footer .btn-primary {
+    background-color: #3B5998;
+    border: none;
+}
+.modal-footer .btn-secondary {
+    background-color: #f0564a;
+    border: none;
+}
+
+/* Để làm cho màu chữ trắng trên button */
+.modal-footer .btn-primary {
+    color: #fff;
+}
+
+/* Để tạo một khoảng cách giữa các button trong footer */
+.modal-footer button + button {
+    margin-top: 10px;
+}
+
+.register-link {
+    color: blue;
+}
+
+.register-link:hover {
+    color: green; /* Màu khi di chuột vào liên kết */
+    text-decoration: underline; /* Gạch chân khi di chuột vào liên kết */
+}
