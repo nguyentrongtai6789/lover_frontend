@@ -1,5 +1,5 @@
 import {useState} from "react";
-
+import '../css/TopRickMan.css' // Import tệp CSS
 export function TopRichMan() {
     const [state, setState] = useState(1);
 
@@ -65,13 +65,13 @@ export function TopRichMan() {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(1)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(1)} style={{ marginTop: '10px',  backgroundColor: '#CCCCCC', color:'black' }} >
                                     hôm nay
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(2)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(2)}  style={{ backgroundColor: '#f0564a' }}>
                                     7 ngày qua
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(3)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(3)}  style={{ backgroundColor: '#f0564a' }}>
                                     30 ngày qua
                                 </button>
                             </div>
@@ -139,13 +139,13 @@ export function TopRichMan() {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(1)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(1)} style={{ marginTop: '10px', backgroundColor: '#f0564a' }}>
                                     hôm nay
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(2)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(2)} style={{ backgroundColor: '#CCCCCC', color:'black'  }} >
                                     7 ngày qua
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(3)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(3)} style={{ backgroundColor: '#f0564a' }}>
                                     30 ngày qua
                                 </button>
                             </div>
@@ -213,13 +213,13 @@ export function TopRichMan() {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(1)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(1)} style={{ marginTop: '10px', backgroundColor: '#f0564a' }}>
                                     hôm nay
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(2)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(2)}  style={{ backgroundColor: '#f0564a' }}>
                                     7 ngày qua
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(3)}>
+                                <button type="button" className="btn btn-primary" onClick={() => changeBXH(3)} style={{ backgroundColor: '#CCCCCC', color:'black'  }}>
                                     30 ngày qua
                                 </button>
                             </div>

@@ -1,0 +1,10 @@
+.modal-footer {
+    display: flex;
+    justify-content: space-around; /* Căn các nút đều nhau theo chiều ngang */
+    align-items: center; /* Căn các nút theo chiều dọc */
+}
+
+.btn {
+    flex: 1; /* Đặt độ rộng linh hoạt cho các nút */
+    margin: 0 5px; /* Tạo khoảng cách giữa các nút */
+}
