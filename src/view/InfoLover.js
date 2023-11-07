@@ -1,26 +1,49 @@
 import Header from "./Header";
 import {Footer} from "./Footer";
 import {Demo} from "./Demo";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {findAllImageByIdProfileLover, findByIdLover} from "../Service/ProfileLoverService";
 
 export function InfoLover() {
+    let [profileLover,setProfileLove] = useState({})
+    let {id} = useParams()
+    let [images,setImage] = useState([])
+    const limit = 5;
+    let count =0 ;
+    useEffect(
+        ()=>{
+            findByIdLover(id).then((res) =>{
+                setProfileLove(res)
+            }).catch(() =>{
+                return {}
+            })
+            findAllImageByIdProfileLover(id).then((res) =>{
+                setImage(res)
+            }).catch(() =>{
+                return []
+            })
+        },[]
+    )
+
     return (
         <>
             <Header/>
             <div className="container-info">
                 <div className={"image-info"}>
-                    <img src="assets/img/chefs/girl4.jpg"
+                    <img src={profileLover.avatarImage}
                          className="img-info" alt=""/>
                     <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
-                                        Thuỳ Link Kute
+                        {profileLover.accountDTO?.nickname}
+
                             </span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
-                                        Đang sẵn sàng
+                                        {profileLover.statusLover?.name}
                             </span>
                     <br/>
                     <span style={{marginTop: 0}}>
-                                        Ngày tham gia: 10/10/2020
+                                        Ngày tham gia: {profileLover.createdAt}
                             </span>
                     <div className={"image-info-action"}>
                         <button className={"btn-info-action"}>
@@ -39,13 +62,13 @@ export function InfoLover() {
                         <div className={"info-info-1"}>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
-                                <span style={{fontWeight: "bold", color: "grey"}}>Số người theo dõi:</span>
-                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>800</span>
+                                <span style={{fontWeight: "bold", color: "grey"}}>Điểm đánh giá trung bình:</span>
+                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>{profileLover.averageRateScore}</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
                                 <span style={{fontWeight: "bold", color: "grey"}}>Đã được thuê:</span>
-                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>1302 giờ</span>
+                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>{profileLover.totalHourRented} /giờ</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
@@ -59,31 +82,31 @@ export function InfoLover() {
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-forward"></i>
                                 <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="assets/img/game-icon/cf-logo.jpg" alt=""/>
+                                     src="/assets/img/game-icon/cf-logo.jpg" alt=""/>
                                 <span style={{marginLeft: 3, fontStyle: "italic"}}>Đột kích</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-forward"></i>
                                 <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="assets/img/game-icon/lol-logo.jpg" alt=""/>
+                                     src="/assets/img/game-icon/lol-logo.jpg" alt=""/>
                                 <span style={{marginLeft: 3, fontStyle: "italic"}}>Liên minh huyền thoại</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-forward"></i>
                                 <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="assets/img/game-icon/pubg-mobile-logo.jpg" alt=""/>
+                                     src="/assets/img/game-icon/pubg-mobile-logo.jpg" alt=""/>
                                 <span style={{marginLeft: 3, fontStyle: "italic"}}>PUBG mobile</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-forward"></i>
                                 <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="assets/img/game-icon/toc-chien-logo.jpg" alt=""/>
+                                     src="/assets/img/game-icon/toc-chien-logo.jpg" alt=""/>
                                 <span style={{marginLeft: 3, fontStyle: "italic"}}>Tốc chiến</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-forward"></i>
                                 <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="assets/img/game-icon/valorant-logo.png" alt=""/>
+                                     src="/assets/img/game-icon/valorant-logo.png" alt=""/>
                                 <span style={{marginLeft: 3, fontStyle: "italic"}}>Valorant</span>
                             </div>
                         </div>
@@ -100,27 +123,27 @@ export function InfoLover() {
                             <div style={{fontStyle: "italic", color: "#d81a1a", fontWeight: "bold"}}>
                                 <div style={{marginBottom: 15}}>
                                     #1<img className={"info-info-image"} style={{marginLeft: 3}}
-                                           src="assets/img/game-icon/valorant-logo.png"
+                                           src="/assets/img/game-icon/valorant-logo.png"
                                            alt=""/> Nguyễn Trọng Tài - 1,300,000đ
                                 </div>
                                 <div style={{marginBottom: 15}}>
                                     #2<img className={"info-info-image"} style={{marginLeft: 3}}
-                                           src="assets/img/game-icon/valorant-logo.png"
+                                           src="/assets/img/game-icon/valorant-logo.png"
                                            alt=""/> Nguyễn Trọng Tài - 1,300,000đ
                                 </div>
                                 <div style={{marginBottom: 15}}>
                                     #3<img className={"info-info-image"} style={{marginLeft: 3}}
-                                           src="assets/img/game-icon/valorant-logo.png"
+                                           src="/assets/img/game-icon/valorant-logo.png"
                                            alt=""/> Nguyễn Trọng Tài - 1,300,000đ
                                 </div>
                                 <div style={{marginBottom: 15}}>
                                     #4<img className={"info-info-image"} style={{marginLeft: 3}}
-                                           src="assets/img/game-icon/valorant-logo.png"
+                                           src="/assets/img/game-icon/valorant-logo.png"
                                            alt=""/> Nguyễn Trọng Tài - 1,300,000đ
                                 </div>
                                 <div style={{marginTop: 5}}>
                                     #5<img className={"info-info-image"} style={{marginLeft: 3}}
-                                           src="assets/img/game-icon/valorant-logo.png"
+                                           src="/assets/img/game-icon/valorant-logo.png"
                                            alt=""/> Nguyễn Trọng Tài - 1,300,000đ
                                 </div>
                             </div>
@@ -133,55 +156,25 @@ export function InfoLover() {
                     <br/>
                     <div className={"container-list-image-info"} data-bs-toggle={"modal"}
                          data-bs-target={"#list-image-info"}>
-                        <img src="assets/img/chefs/girl1.jpg" className="img-info-list-image" alt=""/>
-                        <img src="assets/img/chefs/girl2.jpg" className="img-info-list-image" alt=""/>
-                        <img src="assets/img/chefs/girl3.jpg" className="img-info-list-image" alt=""/>
-                        <img src="assets/img/chefs/girl4.jpg" className="img-info-list-image" alt=""/>
-                        <img src="assets/img/chefs/girl1.jpg" className="img-info-list-image" alt=""/>
+                        {images.map((image) =>{
+                            if (count<limit){
+                                count ++;
+                            return(
+                                <>
+                                <img src={image.urlImage} className="img-info-list-image" alt=""/>
+
+                                </>
+                            )}
+                        })}
                         <div style={{display:"inline-block", position:"relative"}}>
-                            <img src="assets/img/chefs/girl2.jpg" className="img-info-list-image" alt=""/>
+                            <img src={profileLover.avatarImage} className="img-info-list-image" alt=""/>
                             <div className={"img-info-list-image-fade-dive"}>+5</div>
                         </div>
                     </div>
                     <br/>
                     <div style={{textAlign: "justify", marginRight: 13}}>
-                        Hi! Mình là Dâu ♥
-
-                        Giọng con nít!! Đọc Kỹ Trước Khi Rent ạ.
-
-                        sn: 11/05 hhihiih mừn 20 tủi rưỡi..
-
-                        🌸 Nhận hát: có beat, chuyên nhạc buồn, hát dc bolero, trữ tình, một số nhạc hoa,v.v... (1h
-                        mình hát 5-6 bài thôi ạ).
-
-                        + Đêm từ 23h mình nhận hát 100k/h ạ.
-
-                        + Hát liên tục cùng lắm là 2h thui ạ... 300k/h ạ.
-
-                        + Hát + game : x2/h ạ.
-
-                        🌸 MC 100/h
-
-                        🌸 call video: x3/h. Kèm hát x4-x5 tùy cảm xúc của mừn ạ hihi ♥
-
-                        🌸 Mở phim: các nền tảng live fim netfix, galaxy play....
-
-                        🌸 Đọc sách, radio
-
-                        🌺Game:
-
-                        +Liên minh: rank KC2 (sever: VN + Na)
-
-                        +Liên quân: rank tinh anh, cao thủ ạ.
-
-                        +Trên steam: Proop and Seek, ARK, Deceit, black Desert, Among Us, Agrou, Business tour, GTA
-                        V, Farm together, human fall flat, don't starve together, party animal..
-
-                        🌺 Lắng nghe, tâm sự... tự tin đủ thấu hiểu để lắng nghe và chia sẻ, thật tâm nhất có thể..
-                        Nghiêm túc nên khi cần hãy rent.. ( ko xàm, nói không với 18+).
-
-                        🌺 Có míc, míc không ồn, giọng hơi con ít, hơi ít nói với người lạ, quẩy hết sức với người
-                        quen.
+                       <div>{profileLover.description}</div>
+                        <div>{profileLover.requestToUser}</div>
                     </div>
                     <hr/>
                     <div style={{fontWeight: "bold", fontSize: 20, textAlign: "center", color: "gray"}}>
@@ -190,7 +183,7 @@ export function InfoLover() {
                 </div>
             </div>
             <Footer/>
-            <Demo/>
+            <Demo img={images}/>
         </>
     )
 }
