@@ -4,6 +4,9 @@ import {useNavigate} from "react-router-dom"; // Import tệp CSS
 import * as Yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import axios from "axios";
+import {RingLoader} from "react-spinners";
+import {LoadingButton} from "./LoadingButton";
+import Button from "bootstrap/js/src/button";
 
 export function FormLogin() {
     const navigate = useNavigate();
@@ -14,7 +17,8 @@ export function FormLogin() {
         email: "",
         password2: "",
     })
-    const [loading, setLoading] = useState(false)
+    const [loading1, setLoading1] = useState(false)
+    const [loading2, setLoading2] = useState(false)
     const validationSchema = Yup.object().shape({
         nickname: Yup.string().required("Vui lòng nhập tên hiển thị trong ứng dụng!").matches(/^[a-zA-Z0-9]{1,10}$/, "Tên hiển thị chỉ chứa tối đa 10 kí tự gồm chữ cái và chữ số, không chứa kí tự đặc biệt!"),
         email: Yup.string().email('Email không đúng định dạng!').required('Vui lòng nhập email!'),
@@ -28,8 +32,10 @@ export function FormLogin() {
         if (email === "") {
             return alert("Bạn chưa nhập email!")
         }
+        setLoading1(true)
         axios.post("http://localhost:8080/api/sendCodeToEmail/" + email).then((res) => {
             alert(res.data);
+            setLoading1(false)
         })
     }
 
@@ -38,9 +44,15 @@ export function FormLogin() {
         if (code === "") {
             return alert("Hãy điền mã xác nhận")
         }
-        axios.post("http://localhost:8080/api/createNewAccount/" + code, account).then((res) => {
-            alert(res.data);
-        })
+        setLoading2(true)
+        try {
+            axios.post("http://localhost:8080/api/createNewAccount/" + code, account).then((res) => {
+                alert(res.data);
+                setLoading2(false)
+            })
+        } catch (error) {
+            alert("Không thể kết nối đến máy chủ!")
+        }
     }
 
     return (
@@ -99,7 +111,8 @@ export function FormLogin() {
                                            name={"username"}/>
                                     <ErrorMessage name="username"/>
                                     <Field type="text" className={"form-control"}
-                                           placeholder={"Tên hiển thị trong ứng dụng"} style={{textAlign: "center"}}
+                                           placeholder={"Tên hiển thị trong ứng dụng"}
+                                           style={{textAlign: "center"}}
                                            name={"nickname"}/>
                                     <ErrorMessage name="nickname"/>
                                     <Field type="password" className={"form-control"}
@@ -117,16 +130,13 @@ export function FormLogin() {
                                          className="modal-footer d-flex justify-content-center">
                                         <input type="text" placeholder={"Nhập mã xác nhận email"}
                                                className={"form-control"} id={"code-email-verification"}
-                                               style={{width:300}}/>
-                                        <button type="button" className="btn btn-secondary"
-                                                id={"button-submit-form-register"}
-                                                onClick={sendCodeToEmail}>Lấy mã
-                                        </button>
+                                               style={{width: 300}}/>
+                                        <Button1 loading1={!loading1}/>
+                                        <LoadingButton loading={loading1}/>
                                     </div>
                                     <div className="modal-footer d-flex justify-content-center">
-                                        <button type="submit" className="btn btn-secondary"
-                                                id={"button-submit-form-register"}>Đăng ký tài khoản
-                                        </button>
+                                        <Button2 loading2={!loading2}/>
+                                        <LoadingButton loading={loading2}/>
                                     </div>
                                 </Form>
                             </Formik>
@@ -136,4 +146,32 @@ export function FormLogin() {
             </div>
         </>
     )
+
+    function Button1({loading1}) {
+        if (loading1) {
+            return (
+                <button type="button" className="btn btn-secondary"
+                        id={"button-send-code-form-register"}
+                        onClick={sendCodeToEmail}>Lấy mã
+                </button>
+            )
+        }
+        return (
+            <></>
+        )
+    }
+
+    function Button2({loading2}) {
+        if (loading2) {
+            return (
+                <button type="submit" className="btn btn-secondary"
+                        id={"button-submit-form-register"}>Đăng ký tài khoản
+                </button>
+            )
+        }
+        return (
+            <></>
+        )
+    }
 }
+
