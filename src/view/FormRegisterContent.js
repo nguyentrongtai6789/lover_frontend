@@ -44,7 +44,6 @@ export function FormRegisterContent({prop}) {
             axios.post("http://localhost:8080/api/createNewAccount/" + code, account).then((res) => {
                 alert(res.data);
                 setLoading2(false)
-
             })
         } catch (error) {
             alert("Không thể kết nối đến máy chủ!")

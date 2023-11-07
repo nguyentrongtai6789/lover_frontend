@@ -6,7 +6,6 @@ import {TopRichMan} from "./TopRichMan";
 import {Demo} from "./Demo";
 
 function Header() {
-
     return (
         <>
             <header id="header" className="fixed-top d-flex align-items-center header-transparent">
