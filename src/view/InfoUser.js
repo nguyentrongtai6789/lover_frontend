@@ -18,7 +18,7 @@ export function InfoUser() {
                     <span><Link to={"/"}>Sửa</Link></span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
-                                        Đang sẵn sàng
+
                             </span>
                     <br/>
                     <span style={{marginTop: 0}}>
