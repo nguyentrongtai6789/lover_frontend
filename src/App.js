@@ -5,7 +5,6 @@ import {HomeUser} from "./view/Home-user";
 import {InfoLover} from "./view/InfoLover";
 import {InfoUser} from "./view/InfoUser";
 import {Demo} from "./view/Demo";
-
 function App() {
   return (
       <>
