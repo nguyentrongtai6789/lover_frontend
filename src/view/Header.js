@@ -19,26 +19,31 @@ function Header(props) {
             <header id="header" className="fixed-top d-flex align-items-center header-transparent">
                 <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-                    <div className="logo me-auto">
-                        <h1><a href="home.html">PLAY DUAL</a></h1>
+                    <div className="logo me-auto" style={{marginLeft: 60}}>
+                        <h1><a href="http://localhost:3000/"><img src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo" /></a></h1>
                     </div>
 
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
-                            <li><Link to={"/"} style={{textDecoration: "none"}}>Trang chủ</Link></li>
+
                             <li>
                                 <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
                                        className={"form-control"}/>
                             </li>
+
                             <li>
                                 {(idAccount!== 0) && <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Trang của bạn</Link>}
                                 {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Trang của bạn</a>}
                             </li>
+
+                            <li><Link to={"/"} style={{textDecoration:"none"}}>Trang chủ</Link></li>
+                            <li><Link to={"/info-user"} style={{textDecoration:"none"}}>Trang của bạn</Link></li>
+
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-rich-man"}>Top đại gia</a></li>
-                            <li><a className="nav-link scrollto" href="#menu">Thư viện ảnh</a></li>
+
                             <li className="dropdown"><a href="#"><span>Thể loại</span> <i
                                 className="bi bi-chevron-down"></i></a>
                                 <ul>
