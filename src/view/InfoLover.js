@@ -159,29 +159,29 @@ export function InfoLover() {
                         </div>
                     </div>
                     <br/>
-                    <div style={{textAlign: "justify", marginRight: 13}}>
-                        <h3>Dich vu free</h3>
-                        {serviceFree.map((serviceFree) =>{
-                            return(
+                    <div style={{ textAlign: "justify", marginRight: 13 }}>
+                        <h6 style={{ fontFamily: "inherit" }}>Dịch vụ Free</h6>
+                        {serviceFree.map((serviceFree) => {
+                            return (
                                 <>
                                     <div>- {serviceFree.name}</div>
-                                    <hr/>
+                                    <hr />
                                 </>
-                            )
+                            );
                         })}
-                        <h3>Dich Vu Vip</h3>
-                        {vipService.map((vipService) =>{
-                            return(
+                        <h6 style={{ fontFamily: "inherit" }}>Dịch vụ Vip</h6>
+                        {vipService.map((vipService) => {
+                            return (
                                 <>
                                     <div>- {vipService.name}</div>
-                                    <hr/>
+                                    <hr />
                                 </>
-                            )
+                            );
                         })}
-                        <h4>Mô tả chi tiết NCC</h4>
-                       <div>{profileLover.description}</div>
-                        <h4>Yêu cầu của NCC</h4>
+                        <h6 style={{ fontFamily: "inherit" }}>Yêu cầu :</h6>
                         <div>{profileLover.requestToUser}</div>
+                        <h6 style={{ fontFamily: "inherit" }}>Mô tả chi tiết:</h6>
+                        <div>{profileLover.description}</div>
                     </div>
                     <hr/>
                     <div style={{fontWeight: "bold", fontSize: 20, textAlign: "center", color: "gray"}}>
