@@ -6,18 +6,19 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {LoadingButton} from "./LoadingButton";
 import * as Yup from "yup";
+import {ButtonLogin} from "./ButtonLogin";
 
 
-export function FormLogin() {
+export function FormLogin(props) {
     const [account] = useState({
         password: "",
         email: "",
         password2: "",
     })
-    const navigate = useNavigate();
     const [showFormRegister, setShowFormRegister] = useState(false);
     const [loading1, setLoading1] = useState(false)
     const [loading2, setLoading2] = useState(false)
+    const navigate = useNavigate();
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Email không đúng định dạng!').required('Vui lòng nhập email!'),
         password: Yup.string().required('Vui lòng nhập mật khẩu!').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/, "Mật khẩu phải chứa tối thiểu 8 kí tự, ít nhất 1 chữ cái viết thường, ít nhất một chữ cái viết hoa, ít nhất một chữ số!"),
@@ -46,8 +47,11 @@ export function FormLogin() {
 
     function login(account) {
         axios.post("http://localhost:8080/api/login", account).then((res) => {
-            console.log(res)
-            window.open("/")
+            localStorage.setItem("token", res.data.token)
+            localStorage.setItem("isLogin", "true");
+            localStorage.setItem("idAccount", res.data.id)
+            props.m(true);
+            props.n(res.data.id)
             navigate("/")
         }).catch(() => {
             // trường hợp kết nối được đến máy chủ nhưng tài khoản hoặc mật khẩu không đúng:
@@ -112,7 +116,7 @@ export function FormLogin() {
                                                    placeholder={"Mật khẩu"} name={"password"}
                                                    style={{textAlign: "center", marginTop: 10}}/>
                                             <div className="modal-footer d-flex justify-content-center">
-                                                <button type="submit" className="btn btn-secondary">Đăng nhập</button>
+                                                <button type="submit" className="btn btn-secondary" id={"button-login-1"} data-bs-dismiss="modal">Đăng nhập</button>
                                             </div>
                                         </Form>
                                     </Formik>

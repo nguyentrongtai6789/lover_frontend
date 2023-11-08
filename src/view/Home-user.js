@@ -1,7 +1,4 @@
-import Header from "./Header";
-import {Footer} from "./Footer";
 import {Link} from "react-router-dom";
-import {FormLogin} from "./FormLogin";
 import {useEffect, useState} from "react";
 import {fillAllLover} from "../Service/ProfileLoverService";
 
@@ -16,6 +13,9 @@ export function HomeUser() {
     },[]);
     return (
         <>
+            <p>abc</p>
+            <p>abc</p>
+            <p>abc</p>
             <div id="overlay" className="overlay"></div>
             <div className="container-home-user" id={"container-home-user"}>
                 <div className="row">
