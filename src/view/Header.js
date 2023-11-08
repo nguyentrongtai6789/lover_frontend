@@ -1,11 +1,19 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Link} from "react-router-dom";
 import {FormLogin} from "./FormLogin";
 import {TopPlayer} from "./TopPlayer";
 import {TopRichMan} from "./TopRichMan";
-import {Demo} from "./Demo";
+import {ButtonLogin} from "./ButtonLogin";
 
-function Header() {
+function Header(props) {
+    let [statusLogin, setStatusLogin] = useState(props.isLogin);
+    let [idAccount, setIdAccount] = useState(props.idAccount);
+    let getStatus = (status) => {
+        setStatusLogin(status)
+    }
+    let getIdAccount = (id) => {
+        setIdAccount(id);
+    }
     return (
         <>
             <header id="header" className="fixed-top d-flex align-items-center header-transparent">
@@ -17,12 +25,15 @@ function Header() {
 
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
-                            <li><Link to={"/"} style={{textDecoration:"none"}}>Trang chủ</Link></li>
+                            <li><Link to={"/"} style={{textDecoration: "none"}}>Trang chủ</Link></li>
                             <li>
                                 <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
                                        className={"form-control"}/>
                             </li>
-                            <li><Link to={"/info-user"} style={{textDecoration:"none"}}>Trang của bạn</Link></li>
+                            <li>
+                                {(idAccount!== 0) && <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Trang của bạn</Link>}
+                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Trang của bạn</a>}
+                            </li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
@@ -58,13 +69,18 @@ function Header() {
                             </li>
                             <li><a href=""><i className="bi bi-chat-dots"/></a></li>
                             <li><a href=""><i className="bi bi-bell"/></a></li>
-                            <li><a href="" className="nav-link scrollto" data-bs-toggle={"modal"}
-                            data-bs-target={"#exampleModalCenter"}>Đăng nhập</a></li>
+                            <li>
+                                <ButtonLogin m={statusLogin} n={getStatus}/>
+                                {/*{statusLogin && <a href="" className="nav-link scrollto" data-bs-toggle={"modal"}*/}
+                                {/*   data-bs-target={"#exampleModalCenter"}>Đăng xuất</a>}*/}
+                                {/*{!statusLogin && <a href="" className="nav-link scrollto" data-bs-toggle={"modal"}*/}
+                                {/*   data-bs-target={"#exampleModalCenter"}>Đăng nhập</a>}*/}
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </header>
-            <FormLogin/>
+            <FormLogin m={getStatus} n = {getIdAccount}/>
             <TopPlayer/>
             <TopRichMan/>
         </>

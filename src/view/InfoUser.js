@@ -1,19 +1,30 @@
 import Header from "./Header";
 import {Footer} from "./Footer";
-import {Demo} from "./Demo";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {findByIdAccount} from "../Service/InfoUserService"
 
 export function InfoUser() {
+    const {id} = useParams();
+    const [profileUser, setProfileUser] = useState({})
+    const token = localStorage.getItem("token")
+    useEffect(() => {
+        findByIdAccount(id, token).then((res) => {
+            setProfileUser(res.data)
+            console.log(profileUser)
+        })
+    }, [id, token])
     return (
         <>
-            <Header/>
+            <Header isLogin={true} idAccount={id}/>
             <div className="container-info">
+
                 <div className={"image-info"}>
-                    <img src="assets/img/chefs/girl4.jpg"
+                    <img src={profileUser.avatarImage} style={{width:300, height:300}}
                          className="img-info" alt=""/><span><Link to={"/"}>Sửa</Link></span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
-                                        Thuỳ Link Kute
+                        {profileUser.accountDTO?.nickname}
                     </span>
                     <span><Link to={"/"}>Sửa</Link></span>
                     <br/>
@@ -195,7 +206,7 @@ export function InfoUser() {
                 </div>
             </div>
             <Footer/>
-            <Demo/>
+            {/*<Demo/>*/}
         </>
     )
 }
