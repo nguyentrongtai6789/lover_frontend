@@ -17,7 +17,7 @@ function Header() {
 
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
-                            <li><a className="nav-link scrollto" href="#menu"> Profile Lover</a></li>
+                            <li><Link className="nav-link scrollto" to={"/homeProfileLover"}> Profile Lover</Link></li>
 
                             <li>
                                 <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
