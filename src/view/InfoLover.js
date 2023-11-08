@@ -4,17 +4,23 @@ import {Demo} from "./Demo";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {findAllImageByIdProfileLover, findByIdLover} from "../Service/ProfileLoverService";
-
 export function InfoLover() {
     let [profileLover,setProfileLove] = useState({})
     let {id} = useParams()
     let [images,setImage] = useState([])
     const limit = 5;
     let count =0 ;
+    let [service, setService] = useState([]);
+    let [serviceFree, setServiceFree] = useState([]);
+    let [vipService,setVipService] = useState([]);
     useEffect(
         ()=>{
             findByIdLover(id).then((res) =>{
                 setProfileLove(res)
+                setService(res.serviceLovers)
+                setServiceFree(res.freeServices)
+                setVipService(res.vipServices)
+                console.log(res)
             }).catch(() =>{
                 return {}
             })
@@ -77,38 +83,19 @@ export function InfoLover() {
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
-                                <span style={{fontWeight: "bold", color: "grey"}}>Game dual:</span>
+                                <span style={{fontWeight: "bold", color: "grey"}}>Dịch Vụ cơ bản:</span>
                             </div>
-                            <div style={{marginBottom: 10}}>
-                                <i className="bi bi-forward"></i>
-                                <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="/assets/img/game-icon/cf-logo.jpg" alt=""/>
-                                <span style={{marginLeft: 3, fontStyle: "italic"}}>Đột kích</span>
-                            </div>
-                            <div style={{marginBottom: 10}}>
-                                <i className="bi bi-forward"></i>
-                                <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="/assets/img/game-icon/lol-logo.jpg" alt=""/>
-                                <span style={{marginLeft: 3, fontStyle: "italic"}}>Liên minh huyền thoại</span>
-                            </div>
-                            <div style={{marginBottom: 10}}>
-                                <i className="bi bi-forward"></i>
-                                <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="/assets/img/game-icon/pubg-mobile-logo.jpg" alt=""/>
-                                <span style={{marginLeft: 3, fontStyle: "italic"}}>PUBG mobile</span>
-                            </div>
-                            <div style={{marginBottom: 10}}>
-                                <i className="bi bi-forward"></i>
-                                <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="/assets/img/game-icon/toc-chien-logo.jpg" alt=""/>
-                                <span style={{marginLeft: 3, fontStyle: "italic"}}>Tốc chiến</span>
-                            </div>
-                            <div style={{marginBottom: 10}}>
-                                <i className="bi bi-forward"></i>
-                                <img className={"info-info-image"} style={{marginLeft: 3}}
-                                     src="/assets/img/game-icon/valorant-logo.png" alt=""/>
-                                <span style={{marginLeft: 3, fontStyle: "italic"}}>Valorant</span>
-                            </div>
+                            {service.map((service) =>{
+                                return(
+                                    <>
+                                        <div style={{marginBottom: 10}}>
+                                            <img className={"info-info-image"} style={{marginLeft: 3}}
+                                                 src={service.avatarService} alt=""/>
+                                            <span style={{marginLeft: 3, fontStyle: "italic"}}>{service.name}</span>
+                                        </div>
+                                    </>
+                                )
+                            })}
                         </div>
                         <div className={"top-donate-info"}>
                             <div style={{
@@ -173,7 +160,27 @@ export function InfoLover() {
                     </div>
                     <br/>
                     <div style={{textAlign: "justify", marginRight: 13}}>
+                        <h3>Dich vu free</h3>
+                        {serviceFree.map((serviceFree) =>{
+                            return(
+                                <>
+                                    <div>- {serviceFree.name}</div>
+                                    <hr/>
+                                </>
+                            )
+                        })}
+                        <h3>Dich Vu Vip</h3>
+                        {vipService.map((vipService) =>{
+                            return(
+                                <>
+                                    <div>- {vipService.name}</div>
+                                    <hr/>
+                                </>
+                            )
+                        })}
+                        <h4>Mô tả chi tiết NCC</h4>
                        <div>{profileLover.description}</div>
+                        <h4>Yêu cầu của NCC</h4>
                         <div>{profileLover.requestToUser}</div>
                     </div>
                     <hr/>
