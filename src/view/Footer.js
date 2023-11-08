@@ -2,10 +2,7 @@ export function Footer() {
     return (
         <>
             <footer id="footer">
-                <div className="container">
-                    <h3>Delicious</h3>
-                    <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe
-                        commodi placeat.</p>
+                <div className="container" >
                     <div className="social-links">
                         <a href="#" className="twitter"><i className="bx bxl-twitter"></i></a>
                         <a href="#" className="facebook"><i className="bx bxl-facebook"></i></a>
@@ -14,13 +11,15 @@ export function Footer() {
                         <a href="#" className="linkedin"><i className="bx bxl-linkedin"></i></a>
                     </div>
                     <div className="copyright">
-                        &copy; Copyright <strong><span>Delicious</span></strong>. All Rights Reserved
+                        Bản quyền đã đăng ký
                     </div>
                     <div className="credits">
-                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        Bản quyền và thiết kế thuộc về <a href="https://playerduo.net/">Wonder Boys</a>
                     </div>
                 </div>
             </footer>
         </>
     )
 }
+
+
