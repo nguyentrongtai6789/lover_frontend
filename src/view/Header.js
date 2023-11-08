@@ -4,6 +4,7 @@ import {FormLogin} from "./FormLogin";
 import {TopPlayer} from "./TopPlayer";
 import {TopRichMan} from "./TopRichMan";
 import {ButtonLogin} from "./ButtonLogin";
+import {HomeProfileLover} from "./ProfileLover/HomeProfileLover";
 
 function Header(props) {
     let [statusLogin, setStatusLogin] = useState(props.isLogin);
@@ -25,10 +26,13 @@ function Header(props) {
 
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
+
                             <li>
-                                {(idAccount!== 0) && <Link to={"/homeProfileLover"} style={{textDecoration: "none"}}>Profile lover</Link>}
+                                {(idAccount!== 0) && <Link to={"/homeProfileLover/"+idAccount} style={{textDecoration: "none"}}>Profile lover</Link>}
+
                                 {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Profile lover</a>}
                             </li>
+
                             <li>
                                 <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
                                        className={"form-control"}/>
