@@ -5,12 +5,15 @@ import {HomeUser} from "./view/Home-user";
 import {InfoLover} from "./view/InfoLover";
 import {InfoUser} from "./view/InfoUser";
 import {Demo} from "./view/Demo";
+import {HomeProfileLover} from "./view/ProfileLover/HomeProfileLover";
 function App() {
   return (
       <>
         <Routes>
           <Route path={'/'} element={<Layout/>}>
             <Route path={""} element={<HomeUser/>}></Route>
+              <Route path={'/homeProfileLover'} element={<HomeProfileLover/>}></Route>
+
           </Route>
           <Route path={'/info-lover/:id'} element={<InfoLover/>}></Route>
           <Route path={'/info-user'} element={<InfoUser/>}></Route>
