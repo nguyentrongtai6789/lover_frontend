@@ -16,7 +16,6 @@ export function InfoUser() {
     }, [id, token])
     return (
         <>
-            <Header isLogin={true} idAccount={id}/>
             <div className="container-info">
 
                 <div className={"image-info"}>
@@ -205,8 +204,6 @@ export function InfoUser() {
                     </div>
                 </div>
             </div>
-            <Footer/>
-            {/*<Demo/>*/}
         </>
     )
 }

@@ -41,7 +41,7 @@ export function HomeProfileLover() {
 
     return (
         <>
-            <Header/>
+
             <div className="container-info">
                 <div className={"image-info"}>
                     <img src={profileLover.avatarImage}
@@ -188,7 +188,6 @@ export function HomeProfileLover() {
                     </div>
                 </div>
             </div>
-            <Footer/>
             <Demo img={images}/>
         </>
     )

@@ -25,7 +25,10 @@ function Header(props) {
 
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
-
+                            <li>
+                                {(idAccount!== 0) && <Link to={"/homeProfileLover"} style={{textDecoration: "none"}}>Profile lover</Link>}
+                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Profile lover</a>}
+                            </li>
                             <li>
                                 <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
                                        className={"form-control"}/>
@@ -37,7 +40,6 @@ function Header(props) {
                             </li>
 
                             <li><Link to={"/"} style={{textDecoration:"none"}}>Trang chủ</Link></li>
-                            <li><Link to={"/info-user"} style={{textDecoration:"none"}}>Trang của bạn</Link></li>
 
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
