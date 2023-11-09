@@ -17,7 +17,7 @@ export function InfoUser() {
         lastName: "",
         firstName: "",
         phoneNumber: "",
-        accountDTO: {
+        account: {
             id: "",
         },
     })
@@ -86,7 +86,7 @@ export function InfoUser() {
                         }} style={{display: "none"}}/>
                     </div>
                     <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
-                        {profileUser.accountDTO?.nickname}
+                        {profileUser.account?.nickname}
                     </span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
@@ -137,6 +137,7 @@ export function InfoUser() {
                                     {profileUser.phoneNumber}
                                 </span>
                             </div>
+                            <a href="#">Đăng kí tài khoản lover</a>
                         </div>
                     </div>
                     <hr/>

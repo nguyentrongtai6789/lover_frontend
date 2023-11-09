@@ -50,12 +50,15 @@ export function FormLogin(props) {
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("isLogin", "true");
             localStorage.setItem("idAccount", res.data.id)
+            localStorage.setItem("role", res.data.roles[0].authority)
+            // console.log(res)
             props.m(true);
             props.n(res.data.id)
+            props.l(res.data.roles[0].authority)
             navigate("/")
         }).catch(() => {
             // trường hợp kết nối được đến máy chủ nhưng tài khoản hoặc mật khẩu không đúng:
-            alert("Tài khoản hoặc mật khẩu không đúng")
+            alert("Tài khoản hoặc mật khẩu không đúng!")
         })
     }
     function sendCode() {

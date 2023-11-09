@@ -6,12 +6,12 @@ import {Footer} from "./Footer";
 export function Layout() {
     const isLogin = localStorage.getItem("isLogin");
     const idAccount = localStorage.getItem("idAccount")
-    localStorage.getItem("isLogin")
+    const role = localStorage.getItem("role")
     if (isLogin === null && idAccount === null) {
         return (
             <>
                 <>
-                    <Header isLogin={false} idAccount={0}/>
+                    <Header isLogin={false} idAccount={0} role={""}/>
                     <Outlet/>
                     <Footer/>
                 </>
@@ -20,7 +20,7 @@ export function Layout() {
     }
     return (
         <>
-            <Header isLogin={isLogin} idAccount={idAccount}/>
+            <Header isLogin={isLogin} idAccount={idAccount} role={role}/>
             <Outlet/>
             <Footer/>
         </>

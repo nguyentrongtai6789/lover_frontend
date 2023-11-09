@@ -9,11 +9,15 @@ import {HomeProfileLover} from "./ProfileLover/HomeProfileLover";
 function Header(props) {
     let [statusLogin, setStatusLogin] = useState(props.isLogin);
     let [idAccount, setIdAccount] = useState(props.idAccount);
+    let [role, setRole] = useState(props.role)
     let getStatus = (status) => {
         setStatusLogin(status)
     }
     let getIdAccount = (id) => {
         setIdAccount(id);
+    }
+    let getRole = (role) => {
+        setRole(role)
     }
     return (
         <>
@@ -21,16 +25,25 @@ function Header(props) {
                 <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
 
                     <div className="logo me-auto" style={{marginLeft: 60}}>
-                        <h1><a href="http://localhost:3000/"><img src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo" /></a></h1>
+                        <h1><a href="http://localhost:3000/"><img
+                            src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo"/></a></h1>
                     </div>
 
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
 
                             <li>
-                                {(idAccount!== 0) && <Link to={"/homeProfileLover/"+idAccount} style={{textDecoration: "none"}}>Profile lover</Link>}
+                                {(idAccount !== 0 && role === "ROLE_LOVER") &&
+                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>Profile
+                                        lover</Link>}
 
-                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Profile lover</a>}
+                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={() => {
+                                    alert("Bạn chưa đăng nhập")
+                                }}>Profile lover</a>}
+                                {(idAccount !== 0 && role === "ROLE_USER") &&
+                                    <a className="nav-link scrollto" href="#" onClick={() => {
+                                        alert("Bạn chưa đăng kí tài khoản lover!")
+                                    }}>Profile lover</a>}
                             </li>
 
                             <li>
@@ -39,11 +52,15 @@ function Header(props) {
                             </li>
 
                             <li>
-                                {(idAccount!== 0) && <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Thông tin cá nhân</Link>}
-                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Trang của bạn</a>}
+                                {(idAccount !== 0) &&
+                                    <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Thông tin cá
+                                        nhân</Link>}
+                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={() => {
+                                    alert("Bạn chưa đăng nhập")
+                                }}>Trang của bạn</a>}
                             </li>
 
-                            <li><Link to={"/"} style={{textDecoration:"none"}}>Trang chủ</Link></li>
+                            <li><Link to={"/home"} style={{textDecoration: "none"}}>Trang chủ</Link></li>
 
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
@@ -91,7 +108,7 @@ function Header(props) {
                     </nav>
                 </div>
             </header>
-            <FormLogin m={getStatus} n = {getIdAccount}/>
+            <FormLogin m={getStatus} n={getIdAccount} l={getRole}/>
             <TopPlayer/>
             <TopRichMan/>
         </>
