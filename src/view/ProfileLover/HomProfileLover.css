@@ -1,7 +1,7 @@
 .modal-dialog {
     max-width: none; /* Hủy bỏ giới hạn chiều rộng */
-    width: 80%; /* Đặt chiều rộng theo ý muốn */
-    height: 90%
+    width: 99%; /* Đặt chiều rộng theo ý muốn */
+    height: 99%
 }
 
 .modal-content {
