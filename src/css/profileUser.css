@@ -1,0 +1,22 @@
+#setting-avatar-profile-user {
+    position: absolute;
+    right: 20px;
+    color: #f0564a;
+}
+#setting-avatar-profile-user:hover {
+    cursor: pointer;
+}
+#setting-nickname-profile-user {
+    margin-left: 2px;
+    color: #f0564a;
+}
+#setting-nickname-profile-user:hover {
+    cursor: pointer;
+}
+#button-update-info-profile-user {
+    background-color: #f0564a;
+    border: none;
+}
+#button-update-info-profile-user:hover {
+    background-color: #6c757d;
+}

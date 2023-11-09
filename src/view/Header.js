@@ -35,7 +35,7 @@ function Header(props) {
                             </li>
 
                             <li>
-                                {(idAccount!== 0) && <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Trang của bạn</Link>}
+                                {(idAccount!== 0) && <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Thông tin cá nhân</Link>}
                                 {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={()=>{alert("Bạn chưa đăng nhập")}}>Trang của bạn</a>}
                             </li>
 
