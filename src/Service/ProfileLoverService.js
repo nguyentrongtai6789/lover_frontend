@@ -26,3 +26,12 @@ export const findAllImageByIdProfileLover = (id) =>{
         )
     })
 }
+export const SortProfileLoversByMoneyDescending = () =>{
+    return new Promise(resolve => {
+        resolve(
+            axios.get("http://localhost:8080/api/profileLoves/sortProfileLoversByMoneyDescending").then((res) =>{
+                return res.data
+            })
+        )
+    })
+}

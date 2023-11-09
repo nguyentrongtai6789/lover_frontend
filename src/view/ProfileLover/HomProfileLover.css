@@ -1,0 +1,10 @@
+.modal-dialog {
+    max-width: none; /* Hủy bỏ giới hạn chiều rộng */
+    width: 80%; /* Đặt chiều rộng theo ý muốn */
+    height: 90%
+}
+
+.modal-content {
+    height: 80vh; /* Đặt chiều cao theo ý muốn, ví dụ 80% của viewport height */
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
+}

@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {findAllImageByIdProfileLover, findByIdLover} from "../../Service/ProfileLoverService";
 import {findByIdAccount} from "../../Service/ProfileUserService";
+import '../ProfileLover/HomProfileLover.css';
 export function HomeProfileLover() {
     let [profileLover,setProfileLove] = useState({})
     let {id} = useParams()
@@ -17,7 +18,7 @@ export function HomeProfileLover() {
     let [profileUser,setProfileUser] = useState({})
     useEffect(
         ()=>{
-            findByIdLover(1).then((res) =>{
+            findByIdLover(id).then((res) =>{
                 setProfileLove(res)
                 setService(res.serviceLovers)
                 setServiceFree(res.freeServices)
@@ -26,7 +27,7 @@ export function HomeProfileLover() {
             }).catch(() =>{
                 return {}
             })
-            findAllImageByIdProfileLover(1).then((res) =>{
+            findAllImageByIdProfileLover(id).then((res) =>{
                 setImage(res)
             }).catch(() =>{
                 return []
@@ -58,6 +59,34 @@ export function HomeProfileLover() {
                     <span style={{marginTop: 0}}>
                                         Ngày tham gia: {profileLover.createdAt}
                             </span>
+                    <div className="text-center" >
+                        <button href="" className="nav-link scrollto" data-bs-toggle={"modal"}data-bs-target={"#updateLover"}
+                                style={{marginLeft: "10px"}} class="btn btn-primary">
+                            Sửa thông tin cá nhân
+                        </button>
+                    </div>
+
+                </div>
+
+                <div className="modal fade" id="updateLover" tabIndex="-1" role="dialog" aria-labelledby="updateTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header" style={{ textAlign: "center", display: "inline" }}>
+                            {/*    <img src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo" style={{ width: "100px" }} />*/}
+                                <h1>Thông tin cá nhân</h1>
+                            </div>
+                            <div className="modal-body">
+                                <input type="text" className={"form-control"} id={"email-form-login"} style={{ textAlign: "center" }} />
+                                <input type="text" className={"form-control"} id={"email-form-login"} style={{ textAlign: "center", marginTop: 10 }} />
+                                <input type="text" className={"form-control"} id={"email-form-login"}  style={{ textAlign: "center" }} />
+                                <input type="text" className={"form-control"} id={"email-form-login"}  style={{ textAlign: "center" }} />
+                                <input type="text" className={"form-control"} id={"email-form-login"}  style={{ textAlign: "center" }} />
+                                <div className="modal-footer d-flex justify-content-center">
+                                    <button type="button" className="btn btn-secondary" >Cập nhập thông tin</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className={"info-info"}>
                     <div className={"info-info-container-1"}>
@@ -80,7 +109,6 @@ export function HomeProfileLover() {
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
                                 <span style={{fontWeight: "bold", color: "grey"}}>Dịch Vụ cơ bản:</span>
-                                <a className="bi bi-brush-fill"></a>
 
                             </div>
                             {service.map((service) =>{
@@ -132,15 +160,7 @@ export function HomeProfileLover() {
                                            alt=""/> Số CMT/CCCD : {profileUser.citizenNumber}
                                 </div>
                             </div>
-                            <h3>Dich vu free</h3>
-                            {serviceFree.map((serviceFree) =>{
-                                return(
-                                    <>
-                                        <div>- {serviceFree.name}</div>
-                                        <hr/>
-                                    </>
-                                )
-                            })}
+
                         </div>
                     </div>
                     <hr/>
@@ -166,21 +186,29 @@ export function HomeProfileLover() {
                         </div>
                     </div>
                     <br/>
-                    <div style={{textAlign: "justify", marginRight: 13}}>
-
-                        <h3>Dich Vu Vip</h3>
-                        {vipService.map((vipService) =>{
-                            return(
+                    <div style={{ textAlign: "justify", marginRight: 13 }}>
+                        <h4 style={{ fontFamily: "inherit" }}>Dịch vụ Free</h4>
+                        {serviceFree.map((serviceFree) => {
+                            return (
+                                <>
+                                    <div>- {serviceFree.name}</div>
+                                    <hr />
+                                </>
+                            );
+                        })}
+                        <h4 style={{ fontFamily: "inherit" }}>Dịch vụ Vip</h4>
+                        {vipService.map((vipService) => {
+                            return (
                                 <>
                                     <div>- {vipService.name}</div>
-                                    <hr/>
+                                    <hr />
                                 </>
-                            )
+                            );
                         })}
-                        <h4>Mô tả chi tiết NCC</h4>
-                        <div>{profileLover.description}</div>
-                        <h4>Yêu cầu của NCC</h4>
+                        <h4 style={{ fontFamily: "inherit" }}>Yêu cầu :</h4>
                         <div>{profileLover.requestToUser}</div>
+                        <h4 style={{ fontFamily: "inherit" }}>Mô tả chi tiết:</h4>
+                        <div>{profileLover.description}</div>
                     </div>
                     <hr/>
                     <div style={{fontWeight: "bold", fontSize: 20, textAlign: "center", color: "gray"}}>
