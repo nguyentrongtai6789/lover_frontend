@@ -5,7 +5,7 @@ import {
     findAllCityByIdCountry,
     findAllCountry,
     findAllGender,
-    findAllImageByIdProfileLover,
+    findAllImageByIdProfileLover, findAllService,
     findByIdLover,
     updateProfileLover
 } from "../../Service/ProfileLoverService";
@@ -13,7 +13,10 @@ import {findByIdAccount} from "../../Service/ProfileUserService";
 import '../ProfileLover/HomProfileLover.css';
 import {Field, Form, Formik} from "formik";
 import {storage} from "../firebase/Firebase";
-import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {v4} from "uuid";
+import {updateAvatar} from "../../Service/InfoUserService";
+import {RingLoader} from "react-spinners";
 
 export function HomeProfileLover() {
     let [profileLover, setProfileLove] = useState({})
@@ -27,10 +30,15 @@ export function HomeProfileLover() {
     let [vipService, setVipService] = useState([]);
     let [profileUser, setProfileUser] = useState({})
     let [gender, setGender] = useState([])
-    let [avatarUrl, setAvatarUrl] = useState(null)
     let[country,setCountry] = useState([])
     let [idCountry,setIdCountry] = useState(String)
     let [city,setCity] = useState([])
+    const token = localStorage.getItem("token")
+    const [loading, setLoading] = useState(false)
+    const [check,setCheck] = useState(false)
+    let [serviceProfileLover, setServiceProfileLover] = useState([]);
+
+
 
     useEffect(
         () => {
@@ -68,36 +76,36 @@ export function HomeProfileLover() {
             }).catch(()=>{
                 return []
             })
-        }, [idCountry]
+            findAllService().then((res) =>{
+                setServiceProfileLover(res)
+            }).catch(() =>{
+                return []
+            })
+        }, [idCountry,loading,check]
     )
-    const handledImage = (e) => {
-        e.preventDefault();
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const storageRef = ref(storage, `files/${file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                // Cập nhật trạng thái tải lên nếu cần thiết
-            },
-            (error) => {
-                alert(error.message);
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    setAvatarUrl(downloadURL);
-                });
-            }
-        );
-    };
+    function updateAvtPlover(file) {
+        setLoading(true)
+        const storageRef = ref(storage, `images/${file.name + v4()}`);
+        const uploadTask = uploadBytes(storageRef, file);
+        uploadTask.then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                profileUser.avatarImage = url;
+                updateAvatar(url, id, token)
+                    .then(() => {
+                        alert("Cập nhật ảnh đại diện thành công!");
+                        setLoading(false);
+                    })
+            })
+        })
+    }
+    function showImage() {
+        const fileInput = document.getElementById('input-avatar-profile-user');
+        fileInput.click();
+    }
     const updateProfileLover1 = (values) => {
         const updatedProfileLover = {
             ...profileLover,
             fullName: values.fullName,
-            avatarImage: avatarUrl,
             citizenNumber: values.citizenNumber,
             gender: {
                 ...profileLover.gender,
@@ -114,24 +122,42 @@ export function HomeProfileLover() {
             description: values.description,
             requestToUser: values.requestToUser,
         };
-        updateProfileLover(updatedProfileLover, navigate,id).then();
+        updateProfileLover(updatedProfileLover, navigate,id).then(()=>{
+            setCheck(!check)
+            return alert("update thanh cong !!!")
+            }
+        );
     };
-
+    if (loading) {
+        return (
+            <>
+                <div style={{marginTop: 250, marginBottom: 300, display: "flex", justifyContent: "center"}}>
+                    <RingLoader color="#f0564a" loading={loading} size={50}/>
+                </div>
+            </>
+        )
+    }
     return (
         <>
 
             <div className="container-info">
-                <div className={"image-info"}>
-                    <img src={profileLover.avatarImage}
-                         className="img-info" alt=""/>
-                    <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
-                        {profileLover.accountDTO?.nickname}
 
-                            </span>
+                <div className={"image-info"} style={{position: "relative"}}>
+                    <div>
+                        <img src={profileUser.avatarImage} style={{width: 300, height: 300}}
+                             className="img-info" alt=""/>
+                        <i className="bi bi-gear-fill" id={"setting-avatar-profile-user"} onClick={showImage}></i>
+                        <input type="file" id={"input-avatar-profile-user"} onChange={(event) => {
+                            updateAvtPlover(event.target.files[0])
+                        }} style={{display: "none"}}/>
+                    </div>
+                    <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
+                        {profileUser.accountDTO?.nickname}
+                    </span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
-                                        {profileLover.statusLover?.name}
-                            </span>
+                        {profileLover.statusLover?.name}
+                    </span>
                     <br/>
                     <span style={{marginTop: 0}}>
                                         Ngày tham gia: {profileLover.createdAt}
@@ -157,10 +183,6 @@ export function HomeProfileLover() {
                             onSubmit={(e) => updateProfileLover1(e)} >
                                 <Form>
                                     <div className="modal-body" style={{maxHeight: "400px", overflowY: "scroll"}}>
-                                        <h5>avatarImage</h5>
-                                        <Field type={'file'} name={'avatarImage1'} className={'form-control'}
-                                               id="{'avatarImage'}"
-                                               onChange={handledImage}/>
                                         <h5>Họ và tên</h5>
                                         <Field type="text" className="form-control" name="fullName"
                                                style={{textAlign: "center"}}/>
@@ -263,6 +285,10 @@ export function HomeProfileLover() {
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
                                 <span style={{fontWeight: "bold", color: "grey"}}>Dịch Vụ cơ bản:</span>
+                                <i className="bi bi-gear-fill" id={"setting-nickname-profile-user"}
+                                   data-bs-toggle={"modal"}
+                                   data-bs-target={"#edit-info-profile-user"}>
+                                </i>
 
                             </div>
                             {service.map((service) => {
@@ -388,6 +414,58 @@ export function HomeProfileLover() {
                 </div>
             </div>
             <Demo img={images}/>
+            <div className="modal fade" id="edit-info-profile-user" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
+                            <span style={{fontSize: 25}}>Cập nhật Dịch vụ cơ bản:</span>
+                        </div>
+                        <div className="modal-body">
+                            <Formik
+                                initialValues={service}
+                                enableReinitialize={true}
+                                onSubmit={values => {
+                                    const selectedIds = values.checkboxes.map((checked, index) => {
+                                        if (checked) {
+                                            return serviceProfileLover[index].id;
+                                        }
+                                        return null;
+                                    }).filter(id => id !== null);
+                                    console.log(selectedIds)
+                                    // const updatedProfileLover = {
+                                    //     ...profileLover,
+                                    //     serviceLovers:selectedIds,
+                                    //
+                                    // }
+                                    // console.log(updatedProfileLover)
+                                    // updateProfileLover(updatedProfileLover, navigate,id).then()
+                                }}
+                            >
+                                <Form>
+                                    {serviceProfileLover.map((serviceProfileLover) => {
+                                        return (
+                                            <div key={serviceProfileLover.id}>
+                                                <Field
+                                                    type="checkbox"
+                                                    name={`checkboxes.${serviceProfileLover.id}`}
+                                                    value={serviceProfileLover.name}
+                                                />
+                                                <label htmlFor={`checkboxes.${serviceProfileLover.id}`}>
+                                                    {serviceProfileLover.name}
+                                                </label>
+                                            </div>
+                                        );
+                                    })}
+                                    <button type="submit">Submit</button>
+                                </Form>
+                            </Formik>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

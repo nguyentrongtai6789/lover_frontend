@@ -48,8 +48,7 @@ export const updateProfileLover = (profileLover,navigate,id) =>{
     return new Promise(resolve => {
         resolve(
             axios.post("http://localhost:8080/api/profileLoves",profileLover).then(() =>{
-                return navigate("/homeProfileLover/" + id),
-                alert("sửa thông tin thành công")
+                return navigate("/homeProfileLover/" + id)
                 }
             )
         )
@@ -68,6 +67,15 @@ export const findAllCityByIdCountry =(id) =>{
     return new Promise(resolve => {
         resolve(
             axios.get("http://localhost:8080/api/citys/" + id).then((res) =>{
+                return res.data
+            })
+        )
+    })
+}
+export const findAllService = () =>{
+    return new Promise(resolve => {
+        resolve(
+            axios.get("http://localhost:8080/api/services").then((res) =>{
                 return res.data
             })
         )
