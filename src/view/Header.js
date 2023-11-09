@@ -1,15 +1,28 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {FormLogin} from "./FormLogin";
 import {TopPlayer} from "./TopPlayer";
 import {TopRichMan} from "./TopRichMan";
 import {ButtonLogin} from "./ButtonLogin";
-import {HomeProfileLover} from "./ProfileLover/HomeProfileLover";
-
+import {findAll} from "../Service/VipService"
+import {findAllFree} from '../Service/FreeService'
 function Header(props) {
     let [statusLogin, setStatusLogin] = useState(props.isLogin);
     let [idAccount, setIdAccount] = useState(props.idAccount);
     let [role, setRole] = useState(props.role)
+    const [vipServices, setVipServices] = useState([])
+    const [freeServices, setFreeServices] = useState([])
+    useEffect(()=>{
+        findAll().then((res)=>{
+            setVipServices(res)
+            console.log(vipServices)
+        })
+    }, [])
+    useEffect(()=>{
+        findAllFree().then((res)=>{
+            setFreeServices(res)
+        })
+    },[])
     let getStatus = (status) => {
         setStatusLogin(status)
     }
@@ -60,7 +73,7 @@ function Header(props) {
                                 }}>Trang của bạn</a>}
                             </li>
 
-                            <li><Link to={"/home"} style={{textDecoration: "none"}}>Trang chủ</Link></li>
+                            <li><Link to={""} style={{textDecoration: "none"}}>Trang chủ</Link></li>
 
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
@@ -70,24 +83,27 @@ function Header(props) {
                             <li className="dropdown"><a href="#"><span>Thể loại</span> <i
                                 className="bi bi-chevron-down"></i></a>
                                 <ul>
-                                    <li className="dropdown"><a href="#"><span>Game PC</span> <i
+                                    <li className="dropdown"><a href="#"><span>Dịch vụ vip</span> <i
                                         className="bi bi-chevron-right"></i></a>
                                         <ul>
-                                            <li><a href="#">Liên Minh Huyền Thoại</a></li>
-                                            <li><a href="#">Đột kích</a></li>
-                                            <li><a href="#">Valorant</a></li>
-                                            <li><a href="#">Genshin Impact</a></li>
-                                            <li><a href="#">CS GO 2</a></li>
+                                            {
+                                                vipServices.map((item)=>{
+                                                    return (
+                                                        <li><a href="#">{item.name}</a></li>
+                                                    )
+                                                })
+                                            }
                                         </ul>
                                     </li>
-                                    <li className="dropdown"><a href="#"><span>Game MOBILE</span> <i
+                                    <li className="dropdown"><a href="#"><span>Dịch vụ miễn phí</span> <i
                                         className="bi bi-chevron-right"></i></a>
                                         <ul>
-                                            <li><a href="#">Liên quân</a></li>
-                                            <li><a href="#">Tốc chiến</a></li>
-                                            <li><a href="#">Truy kích</a></li>
-                                            <li><a href="#">PUBG mobile</a></li>
-                                            <li><a href="#">Free Fire</a></li>
+                                            {freeServices.map((item)=>{
+                                                return (
+                                                    <li><a href="#">{item.name}</a></li>
+
+                                                )
+                                            })}
                                         </ul>
                                     </li>
                                     <li><a href="#">Hát</a></li>
