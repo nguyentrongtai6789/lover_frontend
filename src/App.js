@@ -17,7 +17,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={<Layout/>}>
                     <Route path={""} element={<Home/>}></Route>
-                    <Route path={'/homeProfileLover'} element={<HomeProfileLover/>}></Route>
+                    <Route path={'/homeProfileLover/:id'} element={<HomeProfileLover/>}></Route>
                     <Route path={'/info-lover/:id'} element={<InfoLover/>}></Route>
                     <Route path={'/info-user/:id'} element={<InfoUser/>}></Route>
                 </Route>

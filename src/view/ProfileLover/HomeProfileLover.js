@@ -18,7 +18,7 @@ export function HomeProfileLover() {
     let [profileUser,setProfileUser] = useState({})
     useEffect(
         ()=>{
-            findByIdLover(1).then((res) =>{
+            findByIdLover(id).then((res) =>{
                 setProfileLove(res)
                 setService(res.serviceLovers)
                 setServiceFree(res.freeServices)
@@ -27,7 +27,7 @@ export function HomeProfileLover() {
             }).catch(() =>{
                 return {}
             })
-            findAllImageByIdProfileLover(1).then((res) =>{
+            findAllImageByIdProfileLover(id).then((res) =>{
                 setImage(res)
             }).catch(() =>{
                 return []
