@@ -7,7 +7,7 @@ export function Layout() {
     const isLogin = localStorage.getItem("isLogin");
     const idAccount = localStorage.getItem("idAccount")
     const role = localStorage.getItem("role")
-    if (isLogin === null && idAccount === null) {
+    if (isLogin === null && idAccount === null && role === null) {
         return (
             <>
                 <>

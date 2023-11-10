@@ -5,6 +5,6 @@
 }
 
 .modal-content {
-    height: 80vh; /* Đặt chiều cao theo ý muốn, ví dụ 80% của viewport height */
-    overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
+    /*height: 80vh; !* Đặt chiều cao theo ý muốn, ví dụ 80% của viewport height *!*/
+    /*overflow-y: auto; !* Cho phép cuộn nếu nội dung vượt quá chiều cao *!*/
 }

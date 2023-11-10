@@ -92,10 +92,10 @@ export function FormLogin(props) {
     }
     return (
         <>
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog"
+            <div className="modal fade login" id="exampleModalCenter" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
+                <div className="modal-dialog modal-dialog-centered login" role="document">
+                    <div className="modal-content login">
                         <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
                             <img src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo"
                                  style={{width: "100px"}}/>
@@ -103,7 +103,7 @@ export function FormLogin(props) {
                         </div>
                         <div id={"container-form"}>
                             <div id={"content-form-login"}>
-                                <div className="modal-body">
+                                <div className="modal-body login">
                                     <Formik
                                         initialValues={{}}
                                         onSubmit={(account) => {
@@ -124,7 +124,7 @@ export function FormLogin(props) {
                                         </Form>
                                     </Formik>
                                 </div>
-                                <div className="text-center" style={{marginBottom: 10, display: "flex"}}>
+                                <div className="text-center" style={{marginTop:40,display: "flex"}}>
                                     <a href="#" className="nav-link scrollto">
                                         <span className="register-link" onClick={showFormRegis}
                                               style={{paddingLeft: 10, color: "#f0564a"}}>Đăng ký tài khoản</span>
@@ -137,7 +137,7 @@ export function FormLogin(props) {
                             </div>
 
                             <div id={"content-form-forgot-password"} style={{display: "none"}}>
-                                <div className="modal-body">
+                                <div className="modal-body login">
                                     <Formik
                                         initialValues={account}
                                         onSubmit={(account) => {
@@ -176,11 +176,11 @@ export function FormLogin(props) {
                                 <div className="text-center" style={{marginBottom: 10, display: "flex"}}>
                                     <a href="#" className="nav-link scrollto">
                                         <span className="register-link" onClick={hiddenFormRegis}
-                                              style={{paddingLeft: 10, color: "#f0564a"}}>Đăng nhập</span>
+                                              style={{paddingLeft:15, color: "#f0564a"}}>Đăng nhập</span>
                                     </a>
                                     <a href="#" className="nav-link scrollto">
                                         <span className="register-link" onClick={showFormRegis}
-                                              style={{paddingLeft: 275, color: "#f0564a"}}>Đăng kí tài khoản</span>
+                                              style={{paddingLeft: 250, color: "#f0564a"}}>Đăng kí tài khoản</span>
                                     </a>
                                 </div>
                             </div>
