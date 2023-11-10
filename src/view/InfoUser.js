@@ -55,7 +55,9 @@ export function InfoUser() {
         console.log(profileUser)
         updateInfo(profileUser, token)
             .then((res) => {
+                console.log(res)
                 setProfileUser(res)
+                console.log(profileUser)
                 alert("Update thành công!")
             })
             .catch(() => {

@@ -6,23 +6,31 @@ import {TopRichMan} from "./TopRichMan";
 import {ButtonLogin} from "./ButtonLogin";
 import {findAll} from "../Service/VipService"
 import {findAllFree} from '../Service/FreeService'
+import {findAllService} from "../Service/ServiceService"
+
 function Header(props) {
     let [statusLogin, setStatusLogin] = useState(props.isLogin);
     let [idAccount, setIdAccount] = useState(props.idAccount);
     let [role, setRole] = useState(props.role)
     const [vipServices, setVipServices] = useState([])
     const [freeServices, setFreeServices] = useState([])
-    useEffect(()=>{
-        findAll().then((res)=>{
+    const [serviceLovers, setServiceLovers] = useState([])
+    useEffect(() => {
+        findAllService().then((res) => {
+            setServiceLovers(res)
+        })
+    }, [])
+    useEffect(() => {
+        findAll().then((res) => {
             setVipServices(res)
             console.log(vipServices)
         })
     }, [])
-    useEffect(()=>{
-        findAllFree().then((res)=>{
+    useEffect(() => {
+        findAllFree().then((res) => {
             setFreeServices(res)
         })
-    },[])
+    }, [])
     let getStatus = (status) => {
         setStatusLogin(status)
     }
@@ -80,14 +88,14 @@ function Header(props) {
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-rich-man"}>Top đại gia</a></li>
 
-                            <li className="dropdown"><a href="#"><span>Thể loại</span> <i
+                            <li className="dropdown"><a href="#"><span>Dịch vụ</span> <i
                                 className="bi bi-chevron-down"></i></a>
                                 <ul>
                                     <li className="dropdown"><a href="#"><span>Dịch vụ vip</span> <i
                                         className="bi bi-chevron-right"></i></a>
                                         <ul>
                                             {
-                                                vipServices.map((item)=>{
+                                                vipServices.map((item) => {
                                                     return (
                                                         <li><a href="#">{item.name}</a></li>
                                                     )
@@ -98,7 +106,7 @@ function Header(props) {
                                     <li className="dropdown"><a href="#"><span>Dịch vụ miễn phí</span> <i
                                         className="bi bi-chevron-right"></i></a>
                                         <ul>
-                                            {freeServices.map((item)=>{
+                                            {freeServices.map((item) => {
                                                 return (
                                                     <li><a href="#">{item.name}</a></li>
 
@@ -106,9 +114,11 @@ function Header(props) {
                                             })}
                                         </ul>
                                     </li>
-                                    <li><a href="#">Hát</a></li>
-                                    <li><a href="#">Tâm sự</a></li>
-                                    <li><a href="#">Khác</a></li>
+                                    {serviceLovers.map((item) => {
+                                        return (
+                                            <li><a href="#">{item.name}</a></li>
+                                        )
+                                    })}
                                 </ul>
                             </li>
                             <li><a href=""><i className="bi bi-chat-dots"/></a></li>
