@@ -1,4 +1,4 @@
-import Header from "./Header";
+import {Header} from "./Header";
 import {Footer} from "./Footer";
 import {Demo} from "./Demo";
 import {Link, useParams} from "react-router-dom";

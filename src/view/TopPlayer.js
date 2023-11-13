@@ -48,7 +48,7 @@ export function TopPlayer() {
 
                                 })}
                                 {profileLover.map((profileLover) =>{
-                                    console.log(profileLover)
+                                    // console.log(profileLover)
                                     count ++
                                     if (count>5){
                                         return(
