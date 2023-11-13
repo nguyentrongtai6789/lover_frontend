@@ -281,9 +281,9 @@
   height: 120px;
   position: absolute;
   top:2%;
-  left: 2%;
+  right: 0.5%;
   font-size: 30px;
-  background-color: rgba(255, 0, 0, 0.13); /* Màu nền và độ mờ của div chồng lên */
+  background-color: rgba(201, 166, 166, 0.05); /* Màu nền và độ mờ của div chồng lên */
   color: white;
   justify-content: center; /* Căn giữa theo chiều ngang */
   align-items: center; /* Căn giữa theo chiều dọc */

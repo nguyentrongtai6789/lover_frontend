@@ -39,6 +39,7 @@ export function Home() {
         } else if (idFreeService !== 0) {
             findAllByFreeService(idFreeService)
                 .then((res) => {
+
                     setProfileLovers(res.data)
                 })
         } else {

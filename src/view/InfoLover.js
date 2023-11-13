@@ -1,56 +1,59 @@
-import {Header} from "./Header";
-import {Footer} from "./Footer";
-import {Demo} from "./Demo";
-import {Link, useParams} from "react-router-dom";
+import "../css/InfoLover.css"
 import {useEffect, useState} from "react";
-import {findAllImageByIdProfileLover, findByIdLover} from "../Service/ProfileLoverService";
-export function InfoLover() {
-    let [profileLover,setProfileLove] = useState({})
-    let {id} = useParams()
-    let [images,setImage] = useState([])
-    const limit = 5;
-    let count =0 ;
-    let [service, setService] = useState([]);
-    let [serviceFree, setServiceFree] = useState([]);
-    let [vipService,setVipService] = useState([]);
-    useEffect(
-        ()=>{
-            findByIdLover(id).then((res) =>{
-                setProfileLove(res)
-                setService(res.serviceLovers)
-                setServiceFree(res.freeServices)
-                setVipService(res.vipServices)
-                console.log(res)
-            }).catch(() =>{
-                return {}
-            })
-            findAllImageByIdProfileLover(id).then((res) =>{
-                setImage(res)
-            }).catch(() =>{
-                return []
-            })
-        },[]
-    )
+import {useParams} from "react-router-dom";
+import {findByIdLover, findImagesByIdLover} from "../Service/InfoLoverService"
+import {Demo} from "./Demo";
 
+export function InfoLover() {
+    const [profileLover, setProfileLover] = useState({})
+    const {id} = useParams();
+    const [vipService, setVipService] = useState([])
+    const [freeService, setFreeService] = useState([])
+    const [baseService, setBaseService] = useState([])
+    const [linkFb, setLinkFb] = useState("")
+    const [images, setImages] = useState([])
+    useEffect(() => {
+        findByIdLover(id)
+            .then((res) => {
+                setProfileLover(res)
+                setFreeService(res.freeServices)
+                setVipService(res.vipServices)
+                setBaseService(res.serviceLovers)
+                setLinkFb(res.facebookLink)
+            })
+    }, [id])
+    useEffect(() => {
+        findImagesByIdLover(id)
+            .then((res) => {
+                setImages(res)
+            })
+    }, [id])
+    console.log(images)
     return (
         <>
-            <Header/>
             <div className="container-info">
-                <div className={"image-info"}>
+                <div className={"image-info-lover"}>
                     <img src={profileLover.avatarImage}
                          className="img-info" alt=""/>
-                    <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
-                        {profileLover.accountDTO?.nickname}
-
-                            </span>
                     <br/>
-                    <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
-                                        {profileLover.statusLover?.name}
-                            </span>
-                    <br/>
-                    <span style={{marginTop: 0}}>
-                                        Ngày tham gia: {profileLover.createdAt}
-                            </span>
+                    <div style={{marginTop: 0, fontWeight: "bold", fontSize: 30, textAlign: "center"}}>
+                        {profileLover.account?.nickname}
+                    </div>
+                    <div style={{marginTop: 0, fontWeight: "bold", color: "green", textAlign: "center"}}>
+                        {profileLover.statusLover?.name}
+                    </div>
+                    <div style={{marginTop: 0}}>
+                        Ngày tham gia: {profileLover.createdAt}
+                    </div>
+                    <div style={{marginTop: 0}}>
+                        Địa chỉ: {profileLover.city?.name}
+                    </div>
+                    <div style={{marginTop: 0}}>
+                        <a href={linkFb}>FACEBOOK</a>
+                    </div>
+                    <div style={{marginTop: 0}}>
+                        Giá: {profileLover.price}/h
+                    </div>
                     <div className={"image-info-action"}>
                         <button className={"btn-info-action"}>
                             <i className="bi bi-currency-dollar">THUÊ</i>
@@ -69,29 +72,64 @@ export function InfoLover() {
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
                                 <span style={{fontWeight: "bold", color: "grey"}}>Điểm đánh giá trung bình:</span>
-                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>{profileLover.averageRateScore}</span>
+                                <span style={{
+                                    fontWeight: "bold",
+                                    color: "#d81a1a",
+                                    marginLeft: 5
+                                }}>{profileLover.averageRateScore}</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
                                 <span style={{fontWeight: "bold", color: "grey"}}>Đã được thuê:</span>
-                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>{profileLover.totalHourRented} /giờ</span>
+                                <span style={{
+                                    fontWeight: "bold",
+                                    color: "#d81a1a",
+                                    marginLeft: 5
+                                }}>{profileLover.totalHourRented} /giờ</span>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
-                                <span style={{fontWeight: "bold", color: "grey"}}>Tỉ lệ hoàn thành:</span>
-                                <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>97,55%</span>
+                                <span style={{fontWeight: "bold", color: "grey"}}>Dịch vụ miễn phí:</span>
                             </div>
-                            <div style={{marginBottom: 10}}>
-                                <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
-                                <span style={{fontWeight: "bold", color: "grey"}}>Dịch Vụ cơ bản:</span>
-                            </div>
-                            {service.map((service) =>{
-                                return(
+                            {freeService.map((item) => {
+                                return (
                                     <>
                                         <div style={{marginBottom: 10}}>
                                             <img className={"info-info-image"} style={{marginLeft: 3}}
-                                                 src={service.avatarService} alt=""/>
-                                            <span style={{marginLeft: 3, fontStyle: "italic"}}>{service.name}</span>
+                                                 src={item.avatarService} alt=""/>
+                                            <span style={{marginLeft: 3, fontStyle: "italic"}}>{item.name}</span>
+                                        </div>
+                                    </>
+                                )
+                            })}
+                            <div style={{marginBottom: 10}}>
+                                <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
+                                <span style={{fontWeight: "bold", color: "grey"}}>Dịch vụ vip:</span>
+                            </div>
+                            {vipService.map((item) => {
+                                return (
+                                    <>
+                                        <div style={{marginBottom: 10}}>
+                                            <img className={"info-info-image"} style={{marginLeft: 3}}
+                                                 src={item.avatarService} alt=""/>
+                                            <span style={{marginLeft: 3, fontStyle: "italic"}}>{item.name}
+                                                + {item.price} /h</span>
+                                        </div>
+                                    </>
+                                )
+                            })}
+                            <div style={{marginBottom: 10}}>
+                                <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
+                                <span style={{fontWeight: "bold", color: "grey"}}>Dịch vụ cơ bản:</span>
+                            </div>
+                            {baseService.map((item) => {
+                                return (
+                                    <>
+                                        <div style={{marginBottom: 10}}>
+                                            <img className={"info-info-image"} style={{marginLeft: 3}}
+                                                 src={item.avatarService} alt=""/>
+                                            <span style={{marginLeft: 3, fontStyle: "italic"}}>{item.name}
+                                            </span>
                                         </div>
                                     </>
                                 )
@@ -141,47 +179,42 @@ export function InfoLover() {
                         Thông tin
                     </div>
                     <br/>
-                    <div className={"container-list-image-info"} data-bs-toggle={"modal"}
+                    <div className={"container-list-image-info-lover"} data-bs-toggle={"modal"}
                          data-bs-target={"#list-image-info"}>
-                        {images.map((image) =>{
-                            if (count<limit){
-                                count ++;
-                            return(
-                                <>
-                                <img src={image.urlImage} className="img-info-list-image" alt=""/>
+                        <div style={{position:"relative"}}>
+                            {images.length <= 4 &&
+                                images.map((item) => {
+                                    return (
+                                        <>
+                                            <img src={item.urlImage} className="img-info-list-image" alt=""/>
+                                        </>
+                                    )
+                                })
+                            }
+                            {images.length >= 4 &&
+                                images.slice(0, 4).map((item) => {
+                                    return (
+                                        <>
+                                            <img src={item.urlImage} className="img-info-list-image" alt=""/>
+                                            <div className={"img-info-list-image-fade-dive"}>+{images.length - 4}</div>
+                                        </>
+                                    )
+                                })
 
-                                </>
-                            )}
-                        })}
-                        <div style={{display:"inline-block", position:"relative"}}>
-                            <img src={profileLover.avatarImage} className="img-info-list-image" alt=""/>
-                            <div className={"img-info-list-image-fade-dive"}>+5</div>
+                            }
                         </div>
                     </div>
                     <br/>
-                    <div style={{ textAlign: "justify", marginRight: 13 }}>
-                        <h6 style={{ fontFamily: "inherit" }}>Dịch vụ Free</h6>
-                        {serviceFree.map((serviceFree) => {
-                            return (
-                                <>
-                                    <div>- {serviceFree.name}</div>
-                                    <hr />
-                                </>
-                            );
-                        })}
-                        <h6 style={{ fontFamily: "inherit" }}>Dịch vụ Vip</h6>
-                        {vipService.map((vipService) => {
-                            return (
-                                <>
-                                    <div>- {vipService.name}</div>
-                                    <hr />
-                                </>
-                            );
-                        })}
-                        <h6 style={{ fontFamily: "inherit" }}>Yêu cầu :</h6>
-                        <div>{profileLover.requestToUser}</div>
-                        <h6 style={{ fontFamily: "inherit" }}>Mô tả chi tiết:</h6>
+                    <div style={{textAlign: "justify", marginRight: 13}}>
                         <div>{profileLover.description}</div>
+                        <h6 style={{fontFamily: "inherit"}}>Yêu cầu đối với người thuê:</h6>
+                        <div>{profileLover.requestToUser}</div>
+                        <h6 style={{fontFamily: "inherit"}}>Sở thích cá nhân:</h6>
+                        <div>{profileLover.hobby}</div>
+                        <h6 style={{fontFamily: "inherit"}}>Chiều cao:</h6>
+                        <div>{profileLover.height}m</div>
+                        <h6 style={{fontFamily: "inherit"}}>Cân nặng:</h6>
+                        <div>{profileLover.weight}kg</div>
                     </div>
                     <hr/>
                     <div style={{fontWeight: "bold", fontSize: 20, textAlign: "center", color: "gray"}}>
@@ -189,8 +222,7 @@ export function InfoLover() {
                     </div>
                 </div>
             </div>
-            <Footer/>
-            <Demo img={images}/>
+            <Demo img={images} id={id}/>
         </>
     )
 }
