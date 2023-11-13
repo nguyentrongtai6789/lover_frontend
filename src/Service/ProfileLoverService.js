@@ -20,7 +20,7 @@ export const findByIdLover = (id) =>{
 export const findAllImageByIdProfileLover = (id) =>{
     return new Promise(resolve => {
         resolve(
-            axios.post("http://localhost:8080/api/image/search/" + id).then((res) =>{
+            axios.get("http://localhost:8080/api/image/findAllByIdProfileLover/" + id).then((res) =>{
                 return res.data
             })
         )
@@ -66,7 +66,7 @@ export const findAllCountry = () =>{
 export const findAllCityByIdCountry =(id) =>{
     return new Promise(resolve => {
         resolve(
-            axios.get("http://localhost:8080/api/citys/" + id).then((res) =>{
+            axios.get("http://localhost:8080/api/citys/findAllById/" + id).then((res) =>{
                 return res.data
             })
         )
@@ -123,7 +123,7 @@ export const findAllVipService = () =>{
 }
 export const updateListVipService = (profileLoverId, freeServices) => {
     return axios
-        .post(`http://localhost:8080/api/profileLoves/freeServices/${profileLoverId}`, freeServices)
+        .post(`http://localhost:8080/api/profileLoves/vipServices/${profileLoverId}`, freeServices)
         .then((res) => {
             return res.data; // Trả về dữ liệu phản hồi từ API nếu cần thiết
         })

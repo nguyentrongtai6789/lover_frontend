@@ -40,7 +40,7 @@ export function HomeProfileLover() {
     const [selectedServices, setSelectedServices] = useState([]);
     const [listFreeService,setListFreeService] = useState([])
     const [listVipService,setListVipService] = useState([])
-
+    console.log(id)
 
 
 
