@@ -1,0 +1,18 @@
+#btn-home-previous-page {
+    background-color: #f0564a;
+    border: none;
+}
+#btn-home-previous-page:hover {
+    background-color: #6c757d;
+}
+#btn-home-next-page {
+    background-color: #f0564a;
+    border: none;
+}
+#btn-home-next-page:hover {
+    background-color: #6c757d;
+}
+#page-item-home {
+    margin-bottom: 20px;
+    text-align: center;
+}

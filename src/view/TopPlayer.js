@@ -1,6 +1,16 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {SortProfileLoversByMoneyDescending} from "../Service/ProfileLoverService";
 export function TopPlayer() {
     const [state, setState] = useState(true);
+    const [profileLover ,setProfileLover] = useState([]);
+    let count = 1;
+    useEffect(()=>{
+        SortProfileLoversByMoneyDescending().then((res) =>{
+            setProfileLover(res)
+        }).catch(() =>{
+            return []
+        })
+    },[])
     function changeBXH(boolean) {
         setState(boolean)
     }
@@ -17,44 +27,44 @@ export function TopPlayer() {
                                 <span style={{fontSize:20}}>ĐƯỢC THUÊ NHIỀU NHẤT</span>
                             </div>
                             <div className="modal-body">
-                                <div  style={{textAlign:"center"}} className={"container-top1"}>
-                                    <br/>
-                                    <img src="assets/img/chefs/girl3.jpg" alt="" id={"img-top1-player"}/>
-                                    <img src="assets/img/game-icon/no1_top_list.jpg" alt="" id={"img-top1-player-frame"}/>
-                                    <br/>
-                                    <br/>
-                                    <span style={{fontWeight:"bold"}}>TOP 1: Thuỳ link kute</span>
-                                    <br/>
-                                    <span style={{fontWeight:"bold"}}>1234 lượt thuê</span>
-                                </div>
-                                <div style={{position:"relative", marginTop:10}} className={"container-top-player"}>
-                                    <span><i className="bi bi-check2-all"></i></span>
-                                    <span><img src="assets/img/chefs/girl3.jpg" alt="" id={"img-top-player"}/></span>
-                                    <span><img src="assets/img/game-icon/2.png" alt="" id={"img-top-player-frame"}/></span>
-                                    <span>Thuỳ link kute</span>
-                                    <span style={{position:"absolute", top:18, right:0}}>1000 giờ</span>
-                                </div>
-                                <div style={{position:"relative", marginTop:10}} className={"container-top-player"}>
-                                    <span><i className="bi bi-check2-all"></i></span>
-                                    <span><img src="assets/img/chefs/girl3.jpg" alt="" id={"img-top-player"}/></span>
-                                    <span><img src="assets/img/game-icon/3.png" alt="" id={"img-top-player-frame"}/></span>
-                                    <span>Thuỳ link kute</span>
-                                    <span style={{position:"absolute", top:18, right:0}}>1000 giờ</span>
-                                </div>
-                                <div style={{position:"relative", marginTop:10}} className={"container-top-player"}>
-                                    <span><i className="bi bi-check2-all"></i></span>
-                                    <span><img src="assets/img/chefs/girl3.jpg" alt="" id={"img-top-player"}/></span>
-                                    <span><img src="assets/img/game-icon/4.png" alt="" id={"img-top-player-frame"}/></span>
-                                    <span>Thuỳ link kute</span>
-                                    <span style={{position:"absolute", top:18, right:0}}>1000 giờ</span>
-                                </div>
-                                <div style={{position:"relative", marginTop:10}} className={"container-top-player"}>
-                                    <span><i className="bi bi-check2-all"></i></span>
-                                    <span><img src="assets/img/chefs/girl3.jpg" alt="" id={"img-top-player"}/></span>
-                                    <span><img src="assets/img/game-icon/5.png" alt="" id={"img-top-player-frame"}/></span>
-                                    <span>Thuỳ link kute</span>
-                                    <span style={{position:"absolute", top:18, right:0}}>1000 giờ</span>
-                                </div>
+                                {profileLover.map((profileLover) =>{
+                                    count ++
+                                    if (count >1) {
+                                        return (
+                                            <>
+                                                <div  style={{textAlign:"center"}} className={"container-top1"}>
+                                                    <br/>
+                                                    <img src={profileLover.avatarImage} alt="" id={"img-top1-player"}/>
+                                                    <img src="assets/img/game-icon/no1_top_list.jpg" alt="" id={"img-top1-player-frame"}/>
+                                                    <br/>
+                                                    <br/>
+                                                    <span style={{fontWeight:"bold"}}>TOP 1: {profileLover.accountDTO?.nickname}</span>
+                                                    <br/>
+                                                    <span style={{fontWeight:"bold"}}>{profileLover.totalMoneyRented} vnd</span>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+
+                                })}
+                                {profileLover.map((profileLover) =>{
+                                    console.log(profileLover)
+                                    count ++
+                                    if (count>5){
+                                        return(
+                                            <>
+                                                <div style={{position:"relative", marginTop:10}} className={"container-top-player"}>
+                                                    <span><i className="bi bi-check2-all"></i></span>
+                                                    <span><img src={profileLover.avatarImage} alt="" id={"img-top-player"}/></span>
+                                                    <span><img src="/assets/img/game-icon/2.png" alt="" id={"img-top-player-frame"}/></span>
+                                                    <span>{profileLover.accountDTO?.nickname}</span>
+                                                    <span style={{position:"absolute", top:18, right:0}}>{profileLover.totalMoneyRented} vnd</span>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+                                })}
+
                             </div>
                             <div className="modal-footer d-flex justify-content-between">
                                 <button type="button" className="btn btn-secondary" onClick={()=>changeBXH(true)} style={{ backgroundColor: '#CCCCCC', color:'black'  }}>Top được thuê nhiều nhất</button>
