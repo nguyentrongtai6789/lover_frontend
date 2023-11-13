@@ -1,44 +1,55 @@
-import {useEffect, useState} from "react";
-import {findAllByPage, getTotalPage} from "../Service/HomeService"
+import {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {LoadingButton} from "./LoadingButton";
 import '../css/home.css'
+import {AppContext} from "../context/AppContext";
+import {findAll, findAllByFreeService, findAllByNameContaining, findAllByVipService} from "../Service/HomeService";
+import Pagination from 'react-js-pagination';
+
 export function Home() {
     const token = localStorage.getItem('token');
-    let [profileLovers, setProfileLovers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPage, setTotalPage] = useState(0);
+    const [profileLovers, setProfileLovers] = useState([]);
+    // phân trang:
+    const [currentPage, setCurrentPage] = useState(1);
+    const profilePerPage = 4; // Số sản phẩm hiển thị trên mỗi trang
+    const indexOfLastProduct = currentPage * profilePerPage;
+    const indexOfFirstProduct = indexOfLastProduct - profilePerPage;
+    const currentProducts = profileLovers.slice(indexOfFirstProduct, indexOfLastProduct);
+    // Xử lý sự kiện chuyển trang
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    // truyền props tìm kiếm:
     const [loading, setLoading] = useState(false);
-    useEffect(()=>{
-        getTotalPage(token)
-            .then((res)=>{
-                setTotalPage(res.data)
-                console.log(totalPage)
-            })
-    })
+    const {searchValue} = useContext(AppContext);
+    const {idVipService} = useContext(AppContext);
+    const {idFreeService} = useContext(AppContext);
+    // console.log(searchValue)
     useEffect(() => {
-        findAllByPage(token, currentPage)
-            .then((res) => {
-                setProfileLovers(res.data.content);
-            }).catch(() => {
-            alert("Xảy ra lỗi trong quá trình kết nối!")
-        })
-    }, [currentPage])
-
-
-    function nextPage() {
-        if (currentPage === totalPage - 1 || totalPage === 0) {
-            return
+        if (searchValue !== "") {
+            findAllByNameContaining(searchValue)
+                .then((res) => {
+                    setProfileLovers(res.data)
+                })
+        } else if (idVipService !== 0) {
+            findAllByVipService(idVipService)
+                .then((res) => {
+                    setProfileLovers(res.data)
+                })
+        } else if (idFreeService !== 0) {
+            findAllByFreeService(idFreeService)
+                .then((res) => {
+                    setProfileLovers(res.data)
+                })
+        } else {
+            findAll()
+                .then((res) => {
+                    setProfileLovers(res.data)
+                })
         }
-        setCurrentPage(prevState => prevState + 1)
-    }
 
-    function previousPage() {
-        if (currentPage === 0) {
-            return;
-        }
-        setCurrentPage(prevState => prevState - 1)
-    }
+    }, [searchValue, idVipService, idFreeService])
+
 
     if (loading) {
         return (
@@ -51,7 +62,7 @@ export function Home() {
         <>
             <div className="container-home-user" id={"container-home-user"}>
                 <div className="row">
-                    {profileLovers.map((item) => {
+                    {currentProducts.map((item) => {
                         return (<div className={"info-lover-home"}>
                             <Link to={"/info-lover/" + item.id}>
                                 <img src={item.avatarImage}
@@ -84,17 +95,12 @@ export function Home() {
                         </div>)
                     })}
                 </div>
-                <div id={"page-item-home"}>
-                    <button onClick={previousPage} className={"btn btn-secondary"}
-                    id={"btn-home-previous-page"}>
-                        <i className="bi bi-rewind-fill"></i>
-                    </button>
-                    {currentPage + 1} of {totalPage}
-                    <button onClick={nextPage} className={"btn btn-secondary"}
-                    id={"btn-home-next-page"}>
-                        <i className="bi bi-fast-forward-fill"></i>
-                    </button>
-                </div>
+                <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={profilePerPage}
+                    totalItemsCount={profileLovers.length}
+                    onChange={handlePageChange}
+                />
             </div>
 
         </>)

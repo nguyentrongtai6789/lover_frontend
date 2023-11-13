@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {FormLogin} from "./FormLogin";
 import {TopPlayer} from "./TopPlayer";
@@ -7,8 +7,11 @@ import {ButtonLogin} from "./ButtonLogin";
 import {findAll} from "../Service/VipService"
 import {findAllFree} from '../Service/FreeService'
 import {findAllService} from "../Service/ServiceService"
+import {connect} from "react-redux";
+import {AppContext} from "../context/AppContext";
 
-function Header(props) {
+
+export function Header(props) {
     let [statusLogin, setStatusLogin] = useState(props.isLogin);
     let [idAccount, setIdAccount] = useState(props.idAccount);
     let [role, setRole] = useState(props.role)
@@ -23,7 +26,6 @@ function Header(props) {
     useEffect(() => {
         findAll().then((res) => {
             setVipServices(res)
-            console.log(vipServices)
         })
     }, [])
     useEffect(() => {
@@ -39,6 +41,21 @@ function Header(props) {
     }
     let getRole = (role) => {
         setRole(role)
+    }
+    const {handleSearchChange} = useContext(AppContext);
+    const {handleIdVipServiceChange} = useContext(AppContext);
+    const {handleFreeServiceChange} = useContext(AppContext);
+
+    function searchByName(event) {
+        const value = event.target.value;
+        handleSearchChange(value);
+    }
+    const {searchValue} = useContext(AppContext);
+    function searchByVipService(id) {
+        handleIdVipServiceChange(id)
+    }
+    function searchByFreeService(id) {
+        handleFreeServiceChange(id)
     }
     return (
         <>
@@ -69,7 +86,10 @@ function Header(props) {
 
                             <li>
                                 <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
-                                       className={"form-control"}/>
+                                       value={searchValue}
+                                       className={"form-control"} onChange={(event) => {
+                                    searchByName(event)
+                                }}/>
                             </li>
 
                             <li>
@@ -81,8 +101,7 @@ function Header(props) {
                                 }}>Trang của bạn</a>}
                             </li>
 
-                            <li><Link to={""} style={{textDecoration: "none"}}>Trang chủ</Link></li>
-
+                            <li><a className="nav-link scrollto" href="http://localhost:3000/" >Trang chủ</a></li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
@@ -97,7 +116,9 @@ function Header(props) {
                                             {
                                                 vipServices.map((item) => {
                                                     return (
-                                                        <li><a href="#">{item.name}</a></li>
+                                                        <li><a href="#" onClick={() => {
+                                                            searchByVipService(item.id)
+                                                        }}>{item.name}</a></li>
                                                     )
                                                 })
                                             }
@@ -108,7 +129,9 @@ function Header(props) {
                                         <ul>
                                             {freeServices.map((item) => {
                                                 return (
-                                                    <li><a href="#">{item.name}</a></li>
+                                                    <li><a href="#" onClick={()=>{
+                                                        searchByFreeService(item.id)
+                                                    }}>{item.name}</a></li>
 
                                                 )
                                             })}
@@ -141,4 +164,5 @@ function Header(props) {
     )
 }
 
-export default Header;
+
+export default (Header);
