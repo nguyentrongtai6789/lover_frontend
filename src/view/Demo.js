@@ -1,23 +1,16 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {findAllImageByIdProfileLover} from "../Service/ProfileLoverService";
+import {findFirstImage} from "../Service/InfoLoverService"
 
 
 export function Demo(props) {
-    // const [images, setImage] = useState([])
-    // let {id} = useParams();
-
+    const [image, setImage] = useState("")
     useEffect(() => {
-
-        // console.log(id)
-        // findAllImageByIdProfileLover(id).then((res) =>{
-        //     // console.log(res)
-        //     setImage(res)
-        // }).catch(() =>{
-        //     return []
-        // })
-        // showDemo()
-    }, [])
+        findFirstImage(props.id)
+            .then((res) => {
+                console.log(res)
+                setImage(res)
+            })
+    },[props.id])
 
     function showDemo() {
         let imgFeature = document.querySelector(".image-main")
@@ -50,7 +43,7 @@ export function Demo(props) {
             updateImageByIndex(currentIndex)
         })
         nextBtn.addEventListener("click", e => {
-            if (currentIndex === listImg.length -1) {
+            if (currentIndex === listImg.length - 1) {
                 currentIndex = 0
             } else {
                 currentIndex++
@@ -61,52 +54,22 @@ export function Demo(props) {
 
     return (
         <>
-            {/*<div className="main">*/}
-            {/*    <img src="assets/img/chefs/girl4.jpg" className="image-main" alt=""/>*/}
-            {/*    <div className={"control prev"}>Prev</div>*/}
-            {/*    <div className={"control next"}>Next</div>*/}
-            {/*</div>*/}
-            {/*<div className="list-img">*/}
-            {/*    <div style={{margin: 5}}><img src="assets/img/chefs/girl1.jpg"*/}
-            {/*                                  className="image-in-list" alt=""/></div>*/}
-            {/*    <div style={{margin: 5}}><img src="assets/img/chefs/girl2.jpg"*/}
-            {/*                                  className="image-in-list" alt=""/></div>*/}
-            {/*    <div style={{margin: 5}}><img src="assets/img/chefs/girl3.jpg"*/}
-            {/*                                  className="image-in-list" alt=""/></div>*/}
-            {/*    <div style={{margin: 5}}><img src="assets/img/chefs/girl4.jpg"*/}
-            {/*                                  className="image-in-list" alt=""/></div>*/}
-            {/*</div>*/}
             <div className="modal fade" id="list-image-info" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="main">
-                            <img src={""} className="image-main" alt=""/>
+                            <img src={image.urlImage} className="image-main" alt=""/>
                             <div className={"control prev"}><i className="bi bi-chevron-left"></i></div>
                             <div className={"control next"}><i className="bi bi-chevron-right"></i></div>
                         </div>
                         <div className="list-img">
-                            {props.img.map((image) =>{
-                                return(
+                            {props.img.map((image) => {
+                                return (
                                     <div style={{margin: 5}}><img onClick={showDemo} src={image.urlImage}
                                                                   className="image-in-list" alt=""/></div>
                                 )
                             })}
-
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl2.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl3.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl4.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl5.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl5.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl5.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
-                            {/*<div style={{margin: 5}}><img src="/assets/img/chefs/girl5.jpg"*/}
-                            {/*                              className="image-in-list" alt=""/></div>*/}
                         </div>
                     </div>
                 </div>

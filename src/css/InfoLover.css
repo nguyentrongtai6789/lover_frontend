@@ -1,0 +1,9 @@
+
+
+.container-list-image-info-lover {
+    display: flex;
+    justify-content: center;
+}
+.container-list-image-info-lover:hover {
+    cursor: pointer;
+}

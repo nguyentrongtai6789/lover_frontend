@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FormLogin} from "./FormLogin";
 import {TopPlayer} from "./TopPlayer";
 import {TopRichMan} from "./TopRichMan";
@@ -12,8 +12,8 @@ import {AppContext} from "../context/AppContext";
 
 
 export function Header(props) {
-    let [statusLogin, setStatusLogin] = useState(props.isLogin);
-    let [idAccount, setIdAccount] = useState(props.idAccount);
+    let [statusLogin, setStatusLogin] = useState(localStorage.getItem('isLogin'));
+    let [idAccount, setIdAccount] = useState(localStorage.getItem("idAccount"));
     let [role, setRole] = useState(props.role)
     const [vipServices, setVipServices] = useState([])
     const [freeServices, setFreeServices] = useState([])
@@ -45,17 +45,20 @@ export function Header(props) {
     const {handleSearchChange} = useContext(AppContext);
     const {handleIdVipServiceChange} = useContext(AppContext);
     const {handleFreeServiceChange} = useContext(AppContext);
-
+    const navigate = useNavigate();
     function searchByName(event) {
         const value = event.target.value;
         handleSearchChange(value);
+        navigate("")
     }
     const {searchValue} = useContext(AppContext);
     function searchByVipService(id) {
         handleIdVipServiceChange(id)
+        navigate("")
     }
     function searchByFreeService(id) {
         handleFreeServiceChange(id)
+        navigate("")
     }
     return (
         <>
@@ -148,10 +151,6 @@ export function Header(props) {
                             <li><a href=""><i className="bi bi-bell"/></a></li>
                             <li>
                                 <ButtonLogin m={statusLogin} n={getStatus}/>
-                                {/*{statusLogin && <a href="" className="nav-link scrollto" data-bs-toggle={"modal"}*/}
-                                {/*   data-bs-target={"#exampleModalCenter"}>Đăng xuất</a>}*/}
-                                {/*{!statusLogin && <a href="" className="nav-link scrollto" data-bs-toggle={"modal"}*/}
-                                {/*   data-bs-target={"#exampleModalCenter"}>Đăng nhập</a>}*/}
                             </li>
                         </ul>
                     </nav>
