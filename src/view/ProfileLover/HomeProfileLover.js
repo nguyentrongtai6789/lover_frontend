@@ -3,10 +3,10 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {
     findAllCityByIdCountry,
-    findAllCountry,
+    findAllCountry, findAllFreeService,
     findAllGender,
-    findAllImageByIdProfileLover, findAllService,
-    findByIdLover,
+    findAllImageByIdProfileLover, findAllService, findAllVipService,
+    findByIdLover, updateListFreeService, updateListService, updateListVipService,
     updateProfileLover
 } from "../../Service/ProfileLoverService";
 import {findByIdAccount} from "../../Service/ProfileUserService";
@@ -35,8 +35,12 @@ export function HomeProfileLover() {
     let [city,setCity] = useState([])
     const token = localStorage.getItem("token")
     const [loading, setLoading] = useState(false)
-    const [check,setCheck] = useState(false)
+    const [check,setCheck] = useState(true)
     let [serviceProfileLover, setServiceProfileLover] = useState([]);
+    const [selectedServices, setSelectedServices] = useState([]);
+    const [listFreeService,setListFreeService] = useState([])
+    const [listVipService,setListVipService] = useState([])
+
 
 
 
@@ -81,6 +85,16 @@ export function HomeProfileLover() {
             }).catch(() =>{
                 return []
             })
+            findAllFreeService().then((res) =>{
+                setListFreeService(res)
+            }).catch(() =>{
+                return []
+            })
+            findAllVipService().then((res) =>{
+                setListVipService(res)
+            }).catch(() =>{
+                return []
+            })
         }, [idCountry,loading,check]
     )
     function updateAvtPlover(file) {
@@ -101,6 +115,17 @@ export function HomeProfileLover() {
     function showImage() {
         const fileInput = document.getElementById('input-avatar-profile-user');
         fileInput.click();
+    }
+    const updatePriceProfileLover  = (values) => {
+      const updatedProfileLover ={
+          ...profileLover,
+          price: values.price,
+      }
+        updateProfileLover(updatedProfileLover, navigate,id).then(()=>{
+                setCheck(!check)
+                return alert("update thanh cong !!!")
+            }
+        );
     }
     const updateProfileLover1 = (values) => {
         const updatedProfileLover = {
@@ -137,6 +162,35 @@ export function HomeProfileLover() {
             </>
         )
     }
+    const handleCheckboxChange = (serviceId) => {
+        setSelectedServices((prevSelectedServices) => {
+            if (prevSelectedServices.includes(serviceId)) {
+                return prevSelectedServices.filter((id) => id !== serviceId);
+            } else {
+                return [...prevSelectedServices, serviceId];
+            }
+        });
+        console.log(selectedServices)
+    };
+
+    const handleSubmit = () => {
+       updateListService(profileLover.id,selectedServices).then(() =>{
+           setCheck(!check)
+           return alert("cập nhập dịch vụ thành công")
+       })
+    };
+    const updateFreeService = () =>{
+        updateListFreeService(profileLover.id,selectedServices).then(()=>{
+            setCheck(!check)
+            return alert("cập nhập dịch vụ miễn phí thành công")
+        })
+    }
+    const updateVipService = () =>{
+        updateListVipService(profileLover.id,selectedServices).then(()=>{
+            setCheck(!check)
+            return alert("cập nhập dịch vụ Víp thành công")
+        })
+    }
     return (
         <>
 
@@ -156,19 +210,14 @@ export function HomeProfileLover() {
                     </span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
+                       <input type="checkbox" className="checkbox"/>
+                        <h5>trạng thái :</h5>
                         {profileLover.statusLover?.name}
                     </span>
                     <br/>
                     <span style={{marginTop: 0}}>
                                         Ngày tham gia: {profileLover.createdAt}
                             </span>
-                    <div className="text-center">
-                        <button href="" className="nav-link scrollto" data-bs-toggle={"modal"}
-                                data-bs-target={"#updateLover"}
-                                style={{marginLeft: "10px"}} class="btn btn-primary">
-                            Sửa thông tin cá nhân
-                        </button>
-                    </div>
 
                 </div>
 
@@ -281,6 +330,10 @@ export function HomeProfileLover() {
                                     color: "#d81a1a",
                                     marginLeft: 5
                                 }}>{profileLover.price} vnd</span>
+                                <i className="bi bi-gear-fill" id={"setting-nickname-profile-user"}
+                                   data-bs-toggle={"modal"}
+                                   data-bs-target={"#edit-price-profile-lover"}>
+                                </i>
                             </div>
                             <div style={{marginBottom: 10}}>
                                 <i className="bi bi-check-all" style={{color: "#d81a1a"}}/>
@@ -312,6 +365,10 @@ export function HomeProfileLover() {
                                 marginBottom: 20
                             }}>
                                 Thông tin cá nhân
+                                <i className="bi bi-gear-fill" id={"setting-nickname-profile-user"}
+                                   data-bs-toggle={"modal"}
+                                   data-bs-target={"#updateLover"}>
+                                </i>
                             </div>
                             <div style={{fontStyle: "italic", color: "#d81a1a", fontWeight: "bold"}}>
                                 <div style={{marginBottom: 15}}>
@@ -384,7 +441,12 @@ export function HomeProfileLover() {
                     </div>
                     <br/>
                     <div style={{textAlign: "justify", marginRight: 13}}>
-                        <h4 style={{fontFamily: "inherit"}}>Dịch vụ Free</h4>
+                        <h4 style={{fontFamily: "inherit"}}>Dịch vụ Free
+                            <i className="bi bi-gear-fill" id={"setting-nickname-profile-user"}
+                               data-bs-toggle={"modal"}
+                               data-bs-target={"#edit-freeService"}>
+                            </i>
+                        </h4>
                         {serviceFree.map((serviceFree) => {
                             return (
                                 <>
@@ -393,7 +455,12 @@ export function HomeProfileLover() {
                                 </>
                             );
                         })}
-                        <h4 style={{fontFamily: "inherit"}}>Dịch vụ Vip</h4>
+                        <h4 style={{fontFamily: "inherit"}}>Dịch vụ Vip
+                            <i className="bi bi-gear-fill" id={"setting-nickname-profile-user"}
+                               data-bs-toggle={"modal"}
+                               data-bs-target={"#edit-vipService"}>
+                            </i>
+                        </h4>
                         {vipService.map((vipService) => {
                             return (
                                 <>
@@ -422,44 +489,106 @@ export function HomeProfileLover() {
                             <span style={{fontSize: 25}}>Cập nhật Dịch vụ cơ bản:</span>
                         </div>
                         <div className="modal-body">
+                            <div>
+                                {serviceProfileLover.map((service) => (
+                                    <div key={service.id}>
+                                        <input
+                                            type="checkbox"
+                                            id={`service-${service.id}`}
+                                            checked={selectedServices.includes(service.id)}
+                                            onChange={() => handleCheckboxChange(service.id)}
+                                        />
+                                        <label htmlFor={`service-${service.id}`}>{service.name}</label>
+                                    </div>
+                                ))}
+                                <button onClick={handleSubmit}>Submit</button>
+                            </div>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal fade" id="edit-price-profile-lover" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
+                            <span style={{fontSize: 25}}>Cập nhật giá dịch vụ:</span>
+                        </div>
+                        <div className="modal-body">
                             <Formik
-                                initialValues={service}
+                                initialValues={profileLover}
                                 enableReinitialize={true}
-                                onSubmit={values => {
-                                    const selectedIds = values.checkboxes.map((checked, index) => {
-                                        if (checked) {
-                                            return serviceProfileLover[index].id;
-                                        }
-                                        return null;
-                                    }).filter(id => id !== null);
-                                    console.log(selectedIds)
-                                    // const updatedProfileLover = {
-                                    //     ...profileLover,
-                                    //     serviceLovers:selectedIds,
-                                    //
-                                    // }
-                                    // console.log(updatedProfileLover)
-                                    // updateProfileLover(updatedProfileLover, navigate,id).then()
-                                }}
+                                onSubmit={(values) =>{updatePriceProfileLover(values)}}
                             >
                                 <Form>
-                                    {serviceProfileLover.map((serviceProfileLover) => {
-                                        return (
-                                            <div key={serviceProfileLover.id}>
-                                                <Field
-                                                    type="checkbox"
-                                                    name={`checkboxes.${serviceProfileLover.id}`}
-                                                    value={serviceProfileLover.name}
-                                                />
-                                                <label htmlFor={`checkboxes.${serviceProfileLover.id}`}>
-                                                    {serviceProfileLover.name}
-                                                </label>
-                                            </div>
-                                        );
-                                    })}
-                                    <button type="submit">Submit</button>
+                                    <Field name={"price"}
+                                           className={"form-control"}></Field>
+                                    <div style={{textAlign: "center", marginTop: 10}}>
+                                        <button className="btn btn-secondary" id={"button-update-price-profile-user"}
+                                                type={"submit"} data-bs-dismiss="modal"
+                                        >Cập nhật
+                                        </button>
+                                    </div>
                                 </Form>
                             </Formik>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal fade" id="edit-freeService" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
+                            <span style={{fontSize: 25}}>Cập nhật Dịch vụ Free:</span>
+                        </div>
+                        <div className="modal-body">
+                            <div>
+                                {listFreeService.map((service) => (
+                                    <div key={service.id}>
+                                        <input
+                                            type="checkbox"
+                                            id={`service-${service.id}`}
+                                            checked={selectedServices.includes(service.id)}
+                                            onChange={() => handleCheckboxChange(service.id)}
+                                        />
+                                        <label htmlFor={`service-${service.id}`}>{service.name}</label>
+                                    </div>
+                                ))}
+                                <button onClick={updateFreeService}>Submit</button>
+                            </div>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal fade" id="edit-vipService" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
+                            <span style={{fontSize: 25}}>Cập nhật Dịch vụ Vip:</span>
+                        </div>
+                        <div className="modal-body">
+                            <div>
+                                {listVipService.map((service) => (
+                                    <div key={service.id}>
+                                        <input
+                                            type="checkbox"
+                                            id={`service-${service.id}`}
+                                            checked={selectedServices.includes(service.id)}
+                                            onChange={() => handleCheckboxChange(service.id)}
+                                        />
+                                        <label htmlFor={`service-${service.id}`}>{service.name}</label>
+                                    </div>
+                                ))}
+                                <button onClick={updateVipService}>Submit</button>
+                            </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
                         </div>

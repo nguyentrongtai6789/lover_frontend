@@ -72,7 +72,7 @@ export function Home() {
                             <div style={{width: 200}}>
                                 <h6 style={{letterSpacing: 2}}>{item.price}/h</h6>
                                 <span style={{marginTop: 0, fontWeight: "bold"}}>
-                                        {item.account.nickname}
+                                        {item.account?.nickname}
                                 </span>
                                 <div className={"like-comment-rate-home"}>
                                     <span style={{marginRight: 5}}>10<i className={"bi bi-heart-fill"}

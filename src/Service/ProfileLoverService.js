@@ -81,3 +81,54 @@ export const findAllService = () =>{
         )
     })
 }
+export const updateListService = (profileLoverId, services) => {
+    return axios
+        .post(`http://localhost:8080/api/profileLoves/services/${profileLoverId}`, services)
+        .then((res) => {
+            return res.data; // Trả về dữ liệu phản hồi từ API nếu cần thiết
+        })
+        .catch((error) => {
+            console.error("Lỗi khi cập nhật dịch vụ:", error);
+            throw error;
+        });
+};
+export const updateListFreeService = (profileLoverId, freeServices) => {
+    return axios
+        .post(`http://localhost:8080/api/profileLoves/freeServices/${profileLoverId}`, freeServices)
+        .then((res) => {
+            return res.data; // Trả về dữ liệu phản hồi từ API nếu cần thiết
+        })
+        .catch((error) => {
+            console.error("Lỗi khi cập nhật dịch vụ:", error);
+            throw error;
+        });
+};
+export const findAllFreeService = () =>{
+    return new Promise(resolve => {
+        resolve(
+            axios.get("http://localhost:8080/api/freeService/findAll").then((res) =>{
+                return res.data
+            })
+        )
+    })
+}
+export const findAllVipService = () =>{
+    return new Promise(resolve => {
+        resolve(
+            axios.get("http://localhost:8080/api/vipService/findAll").then((res) =>{
+                return res.data
+            })
+        )
+    })
+}
+export const updateListVipService = (profileLoverId, freeServices) => {
+    return axios
+        .post(`http://localhost:8080/api/profileLoves/freeServices/${profileLoverId}`, freeServices)
+        .then((res) => {
+            return res.data; // Trả về dữ liệu phản hồi từ API nếu cần thiết
+        })
+        .catch((error) => {
+            console.error("Lỗi khi cập nhật dịch vụ:", error);
+            throw error;
+        });
+};
