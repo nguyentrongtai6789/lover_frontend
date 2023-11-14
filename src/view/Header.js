@@ -14,6 +14,7 @@ import {AppContext} from "../context/AppContext";
 export function Header(props) {
     let [statusLogin, setStatusLogin] = useState(localStorage.getItem('isLogin'));
     let [idAccount, setIdAccount] = useState(localStorage.getItem("idAccount"));
+    console.log(idAccount)
     let [role, setRole] = useState(props.role)
     const [vipServices, setVipServices] = useState([])
     const [freeServices, setFreeServices] = useState([])
@@ -45,10 +46,15 @@ export function Header(props) {
     const {handleSearchChange} = useContext(AppContext);
     const {handleIdVipServiceChange} = useContext(AppContext);
     const {handleFreeServiceChange} = useContext(AppContext);
+    const {handleBaseServiceChange} = useContext(AppContext);
     const navigate = useNavigate();
     function searchByName(event) {
         const value = event.target.value;
         handleSearchChange(value);
+        navigate("")
+    }
+    function searchByBaseService(id) {
+        handleBaseServiceChange(id)
         navigate("")
     }
     const {searchValue} = useContext(AppContext);
@@ -74,14 +80,14 @@ export function Header(props) {
                         <ul>
 
                             <li>
-                                {(idAccount !== 0 && role === "ROLE_LOVER") &&
+                                {(idAccount !== null && role === "ROLE_LOVER") &&
                                     <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>Profile
                                         lover</Link>}
 
-                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={() => {
+                                {(idAccount === null) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
                                 }}>Profile lover</a>}
-                                {(idAccount !== 0 && role === "ROLE_USER") &&
+                                {(idAccount !== null && role === "ROLE_USER") &&
                                     <a className="nav-link scrollto" href="#" onClick={() => {
                                         alert("Bạn chưa đăng kí tài khoản lover!")
                                     }}>Profile lover</a>}
@@ -96,15 +102,15 @@ export function Header(props) {
                             </li>
 
                             <li>
-                                {(idAccount !== 0) &&
+                                {(idAccount !== null) &&
                                     <Link to={"/info-user/" + idAccount} style={{textDecoration: "none"}}>Thông tin cá
                                         nhân</Link>}
-                                {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={() => {
+                                {(idAccount === null) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
                                 }}>Trang của bạn</a>}
                             </li>
 
-                            <li><a className="nav-link scrollto" href="http://localhost:3000/" >Trang chủ</a></li>
+                            <li><a href="http://localhost:3000/" className="nav-link scrollto" >Trang chủ</a></li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
                                    data-bs-target={"#top-player"}>Top player</a></li>
                             <li><a className="nav-link scrollto" href="#menu" data-bs-toggle={"modal"}
@@ -142,7 +148,9 @@ export function Header(props) {
                                     </li>
                                     {serviceLovers.map((item) => {
                                         return (
-                                            <li><a href="#">{item.name}</a></li>
+                                            <li><a href="#" onClick={()=>{
+                                                searchByBaseService(item.id)
+                                            }}>{item.name}</a></li>
                                         )
                                     })}
                                 </ul>

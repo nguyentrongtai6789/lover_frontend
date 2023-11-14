@@ -8,9 +8,10 @@ import {v4} from "uuid";
 import {RingLoader} from "react-spinners";
 import {updateAvatar, updateInfo} from "../Service/InfoUserService"
 import {Field, Form, Formik} from "formik";
+import {findAllByAccountUserId, deleteById} from "../Service/BillService";
 
 export function InfoUser() {
-    const {id} = useParams();
+    const {id} = useParams(); //idAccountUser
     const [profileUser, setProfileUser] = useState({
         avatarImage: "",
         citizenNumber: "",
@@ -21,8 +22,17 @@ export function InfoUser() {
             id: "",
         },
     })
+    const [bills, setBills] = useState([])
     const token = localStorage.getItem("token")
     const [loading, setLoading] = useState(false)
+    const [checkDeleted, setCheckDeleted] = useState(false);
+    useEffect(() => {
+        findAllByAccountUserId(id)
+            .then((res) => {
+                setBills(res)
+                console.log(bills)
+            })
+    }, [id,checkDeleted])
 
     function showImage() {
         const fileInput = document.getElementById('input-avatar-profile-user');
@@ -63,6 +73,15 @@ export function InfoUser() {
             .catch(() => {
                 alert("Xảy ra lỗi không thể update!")
             })
+    }
+
+
+    function deleteBill(id) {
+        if (window.confirm("Bạn có chắc chắn huỷ đơn này không?")) {
+            deleteById(id, token).then(() => {
+                setCheckDeleted(!checkDeleted)
+            })
+        }
     }
 
     if (loading) {
@@ -137,6 +156,49 @@ export function InfoUser() {
                                 <span style={{fontWeight: "bold", color: "grey"}}>Số điện thoại:</span>
                                 <span style={{fontWeight: "bold", color: "#d81a1a", marginLeft: 5}}>
                                     {profileUser.phoneNumber}
+                                </span>
+                            </div>
+                            <div style={{marginBottom: 10}}>
+                                <i className="bi bi-check-all" style={{color: "#f0564a"}}/>
+                                <span style={{fontWeight: "bold", color: "grey"}}>Hoá đơn bạn đã đặt:</span>
+                                <br/>
+                                <span>
+                                    {(bills.length === 0) && <span>Bạn chưa có hoá đơn nào</span>}
+                                    {(bills.length !== 0) &&
+                                        <table className={"table table-striped"}>
+                                            <tbody>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>Tên lover</td>
+                                                <td>Đặt lúc</td>
+                                                <td>Thời gian thuê</td>
+                                                <td>Tổng tiền</td>
+                                                <td>Trạng thái</td>
+                                                <td></td>
+                                            </tr>
+                                            {bills.map((item, index) => {
+                                                return (
+                                                    <>
+                                                        <tr>
+                                                            <td>{index + 1}</td>
+                                                            <td>{item.accountLover?.nickname}</td>
+                                                            <td>{item.createdAt}</td>
+                                                            <td>{item.time} giờ</td>
+                                                            <td>{item.totalMoney} vnđ</td>
+                                                            <td>{item.statusBill?.name}</td>
+                                                            <td>
+                                                                {(item.statusBill.id === 1) &&
+                                                                    <button className={"btn btn-warning"}
+                                                                            onClick={() => {
+                                                                                deleteBill(item.id)
+                                                                            }}>Huỷ</button>}
+                                                            </td>
+                                                        </tr>
+                                                    </>
+                                                )
+                                            })}
+                                            </tbody>
+                                        </table>}
                                 </span>
                             </div>
                             <a href="#">Đăng kí tài khoản lover</a>
