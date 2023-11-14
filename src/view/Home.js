@@ -3,7 +3,13 @@ import {Link} from "react-router-dom";
 import {LoadingButton} from "./LoadingButton";
 import '../css/home.css'
 import {AppContext} from "../context/AppContext";
-import {findAll, findAllByFreeService, findAllByNameContaining, findAllByVipService} from "../Service/HomeService";
+import {
+    findAll,
+    findAllByBaseService,
+    findAllByFreeService,
+    findAllByNameContaining,
+    findAllByVipService
+} from "../Service/HomeService";
 import Pagination from 'react-js-pagination';
 
 export function Home() {
@@ -24,32 +30,42 @@ export function Home() {
     const {searchValue} = useContext(AppContext);
     const {idVipService} = useContext(AppContext);
     const {idFreeService} = useContext(AppContext);
+    const {idBaseService} = useContext(AppContext);
     // console.log(searchValue)
     useEffect(() => {
         if (searchValue !== "") {
+            setCurrentPage(1)
             findAllByNameContaining(searchValue)
                 .then((res) => {
                     setProfileLovers(res.data)
                 })
         } else if (idVipService !== 0) {
+            setCurrentPage(1)
             findAllByVipService(idVipService)
                 .then((res) => {
                     setProfileLovers(res.data)
                 })
         } else if (idFreeService !== 0) {
+            setCurrentPage(1)
             findAllByFreeService(idFreeService)
                 .then((res) => {
-
+                    setProfileLovers(res.data)
+                })
+        } else if (idBaseService !== 0) {
+            setCurrentPage(1)
+            findAllByBaseService(idBaseService)
+                .then((res)=>{
                     setProfileLovers(res.data)
                 })
         } else {
+            setCurrentPage(1)
             findAll()
                 .then((res) => {
                     setProfileLovers(res.data)
                 })
         }
 
-    }, [searchValue, idVipService, idFreeService])
+    }, [searchValue, idVipService, idFreeService, idBaseService])
 
 
     if (loading) {

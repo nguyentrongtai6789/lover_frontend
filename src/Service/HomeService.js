@@ -48,3 +48,15 @@ export function findAllByFreeService(id) {
         )
     })
 }
+export function findAllByBaseService(id) {
+    return new Promise((resolve) => {
+        resolve(
+            axios.get("http://localhost:8080/api/profileLover/findAllByBaseService/" + id)
+                .then((res) => {
+                    return res
+                }).catch(() => {
+                return []
+            })
+        )
+    })
+}

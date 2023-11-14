@@ -7,3 +7,9 @@
 .container-list-image-info-lover:hover {
     cursor: pointer;
 }
+#modal-body-rent-lover {
+    color: black;
+}
+#modal-body-rent-lover td {
+    text-align: left;
+}
