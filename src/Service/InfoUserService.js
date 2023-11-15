@@ -54,3 +54,17 @@ export function updateInfo(profileUser, token) {
     })
 }
 
+export const userRegisterToLover = (idAccountUser, token) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.get("http://localhost:8080/api/profileUser/registerToLover/" + idAccountUser, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((res) => {
+                return res.data;
+            })
+        )
+    })
+}
+
