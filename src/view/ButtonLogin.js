@@ -4,7 +4,7 @@ export function ButtonLogin(props) {
     const navigate = useNavigate();
     if (props.m) {
         return (
-            <a href="" className="nav-link scrollto" onClick={logOut}>Đăng xuất</a>
+            <a href="" className="nav-link scrollto" onClick={logOut}> Đăng xuất</a>
         )
     } else {
         return (

@@ -65,7 +65,7 @@ export function Header(props) {
             <header id="header" className="fixed-top d-flex align-items-center header-transparent">
                 <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-                    <div className="logo me-auto" style={{marginLeft: 60}}>
+                    <div className="logo me-auto" style={{marginLeft: 5}}>
                         <h1><a href="http://localhost:3000/"><img
                             src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo"/></a></h1>
                     </div>
@@ -75,8 +75,8 @@ export function Header(props) {
 
                             <li>
                                 {(idAccount !== 0 && role === "ROLE_LOVER") &&
-                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>Profile
-                                        lover</Link>}
+                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>
+                                        <i className="bi bi-person-hearts" style={{ fontSize : "30px" , color: "#EE0DB9FF"}}></i> </Link>}
 
                                 {(idAccount === 0) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
@@ -87,12 +87,27 @@ export function Header(props) {
                                     }}>Profile lover</a>}
                             </li>
 
-                            <li>
-                                <input type="text" placeholder={"Nhập tên"} style={{marginLeft: 25, width: 190}}
-                                       value={searchValue}
-                                       className={"form-control"} onChange={(event) => {
-                                    searchByName(event)
-                                }}/>
+                            <li style={{position: 'relative'}}>
+                                <input
+                                    type="text"
+                                    placeholder={"Nickname/Url....."}
+                                    style={{marginLeft: "10px", width: "280px"}}
+                                    value={searchValue}
+                                    className={"form-control"}
+                                    onChange={(event) => {
+                                        searchByName(event);
+                                    }}
+                                />
+                                <i
+                                    className="bi bi-search"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        right: '10px',
+                                        transform: 'translateY(-50%)',
+                                        color: '#555', // Màu sắc của biểu tượng
+                                    }}
+                                ></i>
                             </li>
 
                             <li>
@@ -149,9 +164,25 @@ export function Header(props) {
                             </li>
                             <li><a href=""><i className="bi bi-chat-dots"/></a></li>
                             <li><a href=""><i className="bi bi-bell"/></a></li>
-                            <li>
-                                <ButtonLogin m={statusLogin} n={getStatus}/>
+
+                            {/*<li>*/}
+                            {/*    <ButtonLogin m={statusLogin} n={getStatus}/>*/}
+                            {/*</li>*/}
+
+
+
+
+                            <li className="dropdown"><a href="#"><span><i className="bi bi-person-circle" style={{ fontSize : "25px" , color: "#053DF3FF"}}></i></span> <i
+                                className="bi bi-chevron-down"></i></a>
+                                <ul>
+                                    <li>
+                                        <ButtonLogin m={statusLogin} n={getStatus}/>
+                                    </li>
+
+                                </ul>
                             </li>
+
+
                         </ul>
                     </nav>
                 </div>

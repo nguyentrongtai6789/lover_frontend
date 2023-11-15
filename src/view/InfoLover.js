@@ -32,9 +32,11 @@ export function InfoLover() {
     return (
         <>
             <div className="container-info">
-                <div className={"image-info-lover"}>
-                    <img src={profileLover.avatarImage}
-                         className="img-info" alt=""/>
+                <div className={"image-info-lover"} style={{ textAlign: "center"}}>
+                   <div>
+                       <img src={profileLover.avatarImage}
+                            className="img-info" alt=""/>
+                   </div>
                     <br/>
                     <div style={{marginTop: 0, fontWeight: "bold", fontSize: 30, textAlign: "center"}}>
                         {profileLover.account?.nickname}
@@ -42,17 +44,36 @@ export function InfoLover() {
                     <div style={{marginTop: 0, fontWeight: "bold", color: "green", textAlign: "center"}}>
                         {profileLover.statusLover?.name}
                     </div>
-                    <div style={{marginTop: 0}}>
-                        Ngày tham gia: {profileLover.createdAt}
+
+                    <div style={{
+                        backgroundColor: '#4267b2',
+                        padding: '10px',
+                        borderRadius: '50%', // Sử dụng border-radius với giá trị 50% để tạo hình tròn
+                        display: 'flex',
+                        alignItems: 'center', // Căn giữa theo chiều dọc
+                        justifyContent: 'center', // Căn giữa theo chiều ngang
+                        width: '35px', // Đảm bảo kích thước của div là vuông
+                        height: '35px', // Đảm bảo kích thước của div là vuông
+                        marginLeft: '40%'
+                    }}>
+                        <a href="https://www.facebook.com/tuan.sakol"
+                           style={{color: '#ffffff', textDecoration: 'none', display: 'block', fontSize: '20px'}}
+                           className="facebook">
+                            <i className="bx bxl-facebook"></i>
+                        </a>
                     </div>
+
                     <div style={{marginTop: 0}}>
                         Địa chỉ: {profileLover.city?.name}
                     </div>
-                    <div style={{marginTop: 0}}>
-                        <a href={linkFb}>FACEBOOK</a>
-                    </div>
+
+
                     <div style={{marginTop: 0}}>
                         Giá: {profileLover.price}/h
+                    </div>
+
+                    <div style={{marginTop: 0}}>
+                        Ngày tham gia: {profileLover.createdAt}
                     </div>
                     <div className={"image-info-action"}>
                         <button className={"btn-info-action"}>
@@ -181,7 +202,7 @@ export function InfoLover() {
                     <br/>
                     <div className={"container-list-image-info-lover"} data-bs-toggle={"modal"}
                          data-bs-target={"#list-image-info"}>
-                        <div style={{position:"relative"}}>
+                        <div style={{position: "relative"}}>
                             {images.length <= 4 &&
                                 images.map((item) => {
                                     return (
@@ -205,16 +226,16 @@ export function InfoLover() {
                         </div>
                     </div>
                     <br/>
-                    <div style={{textAlign: "justify", marginRight: 13}}>
+                    <div style={{textAlign: "justify", marginRight: 13, marginTop :'20px'}}>
                         <div>{profileLover.description}</div>
-                        <h6 style={{fontFamily: "inherit"}}>Yêu cầu đối với người thuê:</h6>
+                        <h5 style={{fontFamily: "inherit"}}>Yêu cầu đối với người thuê:</h5>
                         <div>{profileLover.requestToUser}</div>
-                        <h6 style={{fontFamily: "inherit"}}>Sở thích cá nhân:</h6>
+                        <h5 style={{fontFamily: "inherit"}}>Sở thích cá nhân:</h5>
                         <div>{profileLover.hobby}</div>
-                        <h6 style={{fontFamily: "inherit"}}>Chiều cao:</h6>
-                        <div>{profileLover.height}m</div>
-                        <h6 style={{fontFamily: "inherit"}}>Cân nặng:</h6>
-                        <div>{profileLover.weight}kg</div>
+                        <h5 style={{fontFamily: "inherit"}}>Chiều cao:</h5>
+                        {profileLover.height}m
+                        <div><h5 style={{fontFamily: "inherit"}}>Cân nặng:</h5>
+                            {profileLover.weight}kg</div>
                     </div>
                     <hr/>
                     <div style={{fontWeight: "bold", fontSize: 20, textAlign: "center", color: "gray"}}>
