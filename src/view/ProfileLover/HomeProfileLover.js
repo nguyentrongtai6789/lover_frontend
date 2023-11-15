@@ -2,6 +2,7 @@ import {Demo} from "../Demo";
 import {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {
+    createProfileLover,
     findAllCityByIdCountry,
     findAllCountry, findAllFreeService,
     findAllGender,
@@ -60,26 +61,26 @@ export function HomeProfileLover() {
             }).catch(() => {
                 return []
             })
-            findAllImageByIdProfileLover(id).then((res) => {
+            findAllImageByIdProfileLover().then((res) => {
                 setImage(res)
             }).catch(() => {
                 return []
             })
-            findByIdAccount(id).then((res) => {
-                setProfileUser(res)
-            }).catch(() => {
-                return {}
-            })
+            // findByIdAccount(id).then((res) => {
+            //     setProfileUser(res)
+            // }).catch(() => {
+            //     return {}
+            // })
             findAllGender().then((res) => {
                 setGender(res)
             }).catch(() => {
                 return []
             })
-            findAllCityByIdCountry(idCountry).then((res) => {
-                setCity(res)
-            }).catch(() => {
-                return []
-            })
+            // findAllCityByIdCountry(idCountry).then((res) => {
+            //     setCity(res)
+            // }).catch(() => {
+            //     return []
+            // })
             findAllService().then((res) => {
                 setServiceProfileLover(res)
             }).catch(() => {
@@ -105,7 +106,10 @@ export function HomeProfileLover() {
         uploadTask.then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
                 profileUser.avatarImage = url;
-                updateAvatar(url, id, token)
+               const updatedProfileLover = {
+                    ...profileLover,
+                    avatarImage:url}
+                createProfileLover(updatedProfileLover)
                     .then(() => {
                         alert("Cập nhật ảnh đại diện thành công!");
                         setLoading(false);
@@ -142,6 +146,9 @@ export function HomeProfileLover() {
             city: {
                 ...profileLover.city,
                 id: values.city.id,
+            },
+            account:{
+                id:id,
             },
             dateOfBirth: values.dateOfBirth,
             height: values.height,
@@ -201,7 +208,7 @@ export function HomeProfileLover() {
 
                 <div className={"image-info"} style={{position: "relative"}}>
                     <div>
-                        <img src={profileUser.avatarImage} style={{width: 300, height: 300}}
+                        <img src={profileLover.avatarImage} style={{width: 300, height: 300}}
                              className="img-info" alt=""/>
                         <i className="bi bi-gear-fill" id={"setting-avatar-profile-user"} onClick={showImage}></i>
                         <input type="file" id={"input-avatar-profile-user"} onChange={(event) => {
@@ -209,7 +216,7 @@ export function HomeProfileLover() {
                         }} style={{display: "none"}}/>
                     </div>
                     <span style={{marginTop: 0, fontWeight: "bold", fontSize: 30}}>
-                        {profileUser.accountDTO?.nickname}
+                        {profileLover.accountDTO?.nickname}
                     </span>
                     <br/>
                     <span style={{marginTop: 0, fontWeight: "bold", color: "green"}}>
@@ -504,7 +511,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={handleSubmit} class="btn btn-danger">Cập nhật</button>
+                                <button onClick={handleSubmit} className="btn btn-danger">Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">

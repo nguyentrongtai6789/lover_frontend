@@ -11,16 +11,16 @@ export const fillAllLover = () =>{
 export const findByIdLover = (id) =>{
     return new Promise( resolve => {
         resolve(
-            axios.get("http://localhost:8080/api/profileLoves/" + id).then((res) =>{
+            axios.get("http://localhost:8080/api/profileLoves/findByIdAccount/" + id).then((res) =>{
                 return res.data
             })
         )
     })
 }
-export const findAllImageByIdProfileLover = (id) =>{
+export const findAllImageByIdProfileLover = () =>{
     return new Promise(resolve => {
         resolve(
-            axios.get("http://localhost:8080/api/image/findAllByIdProfileLover/" + id).then((res) =>{
+            axios.get("http://localhost:8080/api/image/findAllByIdProfileLover/1").then((res) =>{
                 return res.data
             })
         )
@@ -47,7 +47,7 @@ export const findAllGender = () =>{
 export const updateProfileLover = (profileLover,navigate,id) =>{
     return new Promise(resolve => {
         resolve(
-            axios.post("http://localhost:8080/api/profileLoves",profileLover).then(() =>{
+            axios.post("http://localhost:8080/api/profileLoves/update",profileLover).then(() =>{
                 return navigate("/homeProfileLover/" + id)
                 }
             )
@@ -132,3 +132,12 @@ export const updateListVipService = (profileLoverId, freeServices) => {
             throw error;
         });
 };
+export const createProfileLover = (profileLover) =>{
+    return new Promise(resolve => {
+        resolve(
+            axios.post("http://localhost:8080/api/profileLoves/update",profileLover).then(() =>{
+                }
+            )
+        )
+    })
+}
