@@ -17,15 +17,6 @@ export const findByIdLover = (id) =>{
         )
     })
 }
-export const findAllImageByIdProfileLover = () =>{
-    return new Promise(resolve => {
-        resolve(
-            axios.get("http://localhost:8080/api/image/findAllByIdProfileLover/1").then((res) =>{
-                return res.data
-            })
-        )
-    })
-}
 export const SortProfileLoversByMoneyDescending = () =>{
     return new Promise(resolve => {
         resolve(

@@ -5,8 +5,7 @@ import {
     createProfileLover,
     findAllCityByIdCountry,
     findAllCountry, findAllFreeService,
-    findAllGender,
-    findAllImageByIdProfileLover, findAllService, findAllVipService,
+    findAllGender, findAllService, findAllVipService,
     findByIdLover, updateListFreeService, updateListService, updateListVipService,
     updateProfileLover
 } from "../../Service/ProfileLoverService";
@@ -18,6 +17,7 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
 import {updateAvatar} from "../../Service/InfoUserService";
 import {RingLoader} from "react-spinners";
+import {findImagesByIdLover} from "../../Service/InfoLoverService";
 
 export function HomeProfileLover() {
     let [profileLover, setProfileLove] = useState({})
@@ -61,26 +61,26 @@ export function HomeProfileLover() {
             }).catch(() => {
                 return []
             })
-            findAllImageByIdProfileLover().then((res) => {
+            findImagesByIdLover(id).then((res) => {
                 setImage(res)
             }).catch(() => {
                 return []
             })
-            // findByIdAccount(id).then((res) => {
-            //     setProfileUser(res)
-            // }).catch(() => {
-            //     return {}
-            // })
+            findByIdAccount(id).then((res) => {
+                setProfileUser(res)
+            }).catch(() => {
+                return {}
+            })
             findAllGender().then((res) => {
                 setGender(res)
             }).catch(() => {
                 return []
             })
-            // findAllCityByIdCountry(idCountry).then((res) => {
-            //     setCity(res)
-            // }).catch(() => {
-            //     return []
-            // })
+            findAllCityByIdCountry(idCountry).then((res) => {
+                setCity(res)
+            }).catch(() => {
+                return []
+            })
             findAllService().then((res) => {
                 setServiceProfileLover(res)
             }).catch(() => {
@@ -490,7 +490,7 @@ export function HomeProfileLover() {
                     </div>
                 </div>
             </div>
-            <Demo img={images}/>
+            <Demo img={images} id={profileLover.id}/>
             <div className="modal fade" id="edit-info-profile-user" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">

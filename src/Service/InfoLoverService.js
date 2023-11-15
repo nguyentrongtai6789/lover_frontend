@@ -18,15 +18,6 @@ export const findImagesByIdLover = (id) => {
         )
     })
 }
-export const findFirstImage = (id) => {
-    return new Promise(resolve => {
-        resolve(
-            axios.get("http://localhost:8080/api/image/findAllByIdProfileLover/" + id).then((res) => {
-                return res.data[0]
-            })
-        )
-    })
-}
 
 export function findVipServicesByIdLover(id) {
     return new Promise((resolve) => {
