@@ -226,29 +226,29 @@ export function HomeProfileLover() {
                     <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
-                                <h1>Thông tin cá nhân</h1>
+                                <h1 style={{fontFamily: "inherit" }}>Thông tin cá nhân</h1>
                             </div>
                             <Formik initialValues={profileLover} enableReinitialize={true}
                             onSubmit={(e) => updateProfileLover1(e)} >
                                 <Form>
-                                    <div className="modal-body" style={{maxHeight: "400px", overflowY: "scroll"}}>
-                                        <h5>Họ và tên</h5>
+                                    <div className="modal-body" style={{maxHeight: "400px", overflowY: "scroll" }}>
+                                        <h5 style={{fontFamily: "inherit" }}>Họ và tên</h5>
                                         <Field type="text" className="form-control" name="fullName"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Năm Sinh</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Năm Sinh</h5>
                                         <Field type="date" className="form-control" name="dateOfBirth"
                                                id="email-form-login" style={{textAlign: "center", marginTop: 10}}/>
-                                        <h5>Số CMT/CCCD</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Số CMT/CCCD</h5>
                                         <Field type="text" className="form-control" name="citizenNumber"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Giới Tính</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Giới Tính</h5>
                                         <Field as="select" name="gender.id" className="form-control" id="gender">
                                             <option>------------</option>
                                             {gender.map((c) => (
                                                 <option value={c.id}>{c.name}</option>
                                             ))}
                                         </Field>
-                                        <h5>Quốc Gia</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Quốc Gia</h5>
                                             <select name={'address.wards.district.city.id'}  onChange={(e) => {
                                                 const textCountry = e.target.value;
                                                 setIdCountry(textCountry)
@@ -260,26 +260,26 @@ export function HomeProfileLover() {
                                                     )
                                                 })}
                                             </select>
-                                        <h5>Thanh Pho</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Thanh Pho</h5>
                                         <Field as="select" name="city.id" className="form-control" id="gender">
                                             <option>------------</option>
                                             {city.map((c) => (
                                                 <option value={c.id}>{c.name}</option>
                                             ))}
                                         </Field>
-                                        <h5>chiều cao</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>chiều cao</h5>
                                         <Field type="text" className="form-control" name="height" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Cân nặng</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Cân nặng</h5>
                                         <Field type="text" className="form-control" name="weight" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Sở thích</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Sở thích</h5>
                                         <Field type="text" className="form-control" name="hobby" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Mô tả bản thân</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Mô tả bản thân</h5>
                                         <Field type="text" className="form-control" name="description"
                                                id="email-form-login" style={{textAlign: "center"}}/>
-                                        <h5>Yêu cầu đối với người thuê</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Yêu cầu đối với người thuê</h5>
                                         <Field type="text" className="form-control" name="requestToUser"
                                                id="email-form-login" style={{textAlign: "center"}}/>
                                         <div className="modal-footer d-flex justify-content-center">
@@ -501,7 +501,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={handleSubmit}>Submit</button>
+                                <button onClick={handleSubmit} class="btn btn-danger">Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
@@ -527,7 +527,7 @@ export function HomeProfileLover() {
                                            className={"form-control"}></Field>
                                     <div style={{textAlign: "center", marginTop: 10}}>
                                         <button className="btn btn-secondary" id={"button-update-price-profile-user"}
-                                                type={"submit"} data-bs-dismiss="modal"
+                                                type={"submit"} data-bs-dismiss="modal" class="btn btn-danger"
                                         >Cập nhật
                                         </button>
                                     </div>
@@ -559,7 +559,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={updateFreeService}>Submit</button>
+                                <button onClick={updateFreeService} class="btn btn-danger">Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
@@ -587,7 +587,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={updateVipService}>Submit</button>
+                                <button onClick={updateVipService} class="btn btn-danger"> Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
