@@ -1,6 +1,6 @@
 import {Demo} from "../Demo";
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {
     findAllCityByIdCountry,
     findAllCountry, findAllFreeService,
@@ -30,18 +30,18 @@ export function HomeProfileLover() {
     let [vipService, setVipService] = useState([]);
     let [profileUser, setProfileUser] = useState({})
     let [gender, setGender] = useState([])
-    let[country,setCountry] = useState([])
-    let [idCountry,setIdCountry] = useState(String)
-    let [city,setCity] = useState([])
+    let [country, setCountry] = useState([])
+    let [idCountry, setIdCountry] = useState(String)
+    let [city, setCity] = useState([])
     const token = localStorage.getItem("token")
     const [loading, setLoading] = useState(false)
-    const [check,setCheck] = useState(true)
+    const [check, setCheck] = useState(true)
     let [serviceProfileLover, setServiceProfileLover] = useState([]);
     const [selectedServices, setSelectedServices] = useState([]);
-    const [listFreeService,setListFreeService] = useState([])
-    const [listVipService,setListVipService] = useState([])
+    const [listFreeService, setListFreeService] = useState([])
+    const [listVipService, setListVipService] = useState([])
+    const idAccount = localStorage.getItem("idAccount")
     console.log(id)
-
 
 
     useEffect(
@@ -55,9 +55,9 @@ export function HomeProfileLover() {
             }).catch(() => {
                 return {}
             })
-            findAllCountry().then((res) =>{
+            findAllCountry().then((res) => {
                 setCountry(res)
-            }).catch(()=>{
+            }).catch(() => {
                 return []
             })
             findAllImageByIdProfileLover(id).then((res) => {
@@ -75,28 +75,29 @@ export function HomeProfileLover() {
             }).catch(() => {
                 return []
             })
-            findAllCityByIdCountry(idCountry).then((res) =>{
+            findAllCityByIdCountry(idCountry).then((res) => {
                 setCity(res)
-            }).catch(()=>{
+            }).catch(() => {
                 return []
             })
-            findAllService().then((res) =>{
+            findAllService().then((res) => {
                 setServiceProfileLover(res)
-            }).catch(() =>{
+            }).catch(() => {
                 return []
             })
-            findAllFreeService().then((res) =>{
+            findAllFreeService().then((res) => {
                 setListFreeService(res)
-            }).catch(() =>{
+            }).catch(() => {
                 return []
             })
-            findAllVipService().then((res) =>{
+            findAllVipService().then((res) => {
                 setListVipService(res)
-            }).catch(() =>{
+            }).catch(() => {
                 return []
             })
-        }, [idCountry,loading,check]
+        }, [idCountry, loading, check]
     )
+
     function updateAvtPlover(file) {
         setLoading(true)
         const storageRef = ref(storage, `images/${file.name + v4()}`);
@@ -112,16 +113,18 @@ export function HomeProfileLover() {
             })
         })
     }
+
     function showImage() {
         const fileInput = document.getElementById('input-avatar-profile-user');
         fileInput.click();
     }
-    const updatePriceProfileLover  = (values) => {
-      const updatedProfileLover ={
-          ...profileLover,
-          price: values.price,
-      }
-        updateProfileLover(updatedProfileLover, navigate,id).then(()=>{
+
+    const updatePriceProfileLover = (values) => {
+        const updatedProfileLover = {
+            ...profileLover,
+            price: values.price,
+        }
+        updateProfileLover(updatedProfileLover, navigate, id).then(() => {
                 setCheck(!check)
                 return alert("update thanh cong !!!")
             }
@@ -147,9 +150,9 @@ export function HomeProfileLover() {
             description: values.description,
             requestToUser: values.requestToUser,
         };
-        updateProfileLover(updatedProfileLover, navigate,id).then(()=>{
-            setCheck(!check)
-            return alert("update thanh cong !!!")
+        updateProfileLover(updatedProfileLover, navigate, id).then(() => {
+                setCheck(!check)
+                return alert("update thanh cong !!!")
             }
         );
     };
@@ -174,19 +177,19 @@ export function HomeProfileLover() {
     };
 
     const handleSubmit = () => {
-       updateListService(profileLover.id,selectedServices).then(() =>{
-           setCheck(!check)
-           return alert("cập nhập dịch vụ thành công")
-       })
+        updateListService(profileLover.id, selectedServices).then(() => {
+            setCheck(!check)
+            return alert("cập nhập dịch vụ thành công")
+        })
     };
-    const updateFreeService = () =>{
-        updateListFreeService(profileLover.id,selectedServices).then(()=>{
+    const updateFreeService = () => {
+        updateListFreeService(profileLover.id, selectedServices).then(() => {
             setCheck(!check)
             return alert("cập nhập dịch vụ miễn phí thành công")
         })
     }
-    const updateVipService = () =>{
-        updateListVipService(profileLover.id,selectedServices).then(()=>{
+    const updateVipService = () => {
+        updateListVipService(profileLover.id, selectedServices).then(() => {
             setCheck(!check)
             return alert("cập nhập dịch vụ Víp thành công")
         })
@@ -226,60 +229,60 @@ export function HomeProfileLover() {
                     <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
-                                <h1 style={{fontFamily: "inherit" }}>Thông tin cá nhân</h1>
+                                <h1 style={{fontFamily: "inherit"}}>Thông tin cá nhân</h1>
                             </div>
                             <Formik initialValues={profileLover} enableReinitialize={true}
-                            onSubmit={(e) => updateProfileLover1(e)} >
+                                    onSubmit={(e) => updateProfileLover1(e)}>
                                 <Form>
-                                    <div className="modal-body" style={{maxHeight: "400px", overflowY: "scroll" }}>
-                                        <h5 style={{fontFamily: "inherit" }}>Họ và tên</h5>
+                                    <div className="modal-body" style={{maxHeight: "400px", overflowY: "scroll"}}>
+                                        <h5 style={{fontFamily: "inherit"}}>Họ và tên</h5>
                                         <Field type="text" className="form-control" name="fullName"
                                                style={{textAlign: "center"}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Năm Sinh</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Năm Sinh</h5>
                                         <Field type="date" className="form-control" name="dateOfBirth"
                                                id="email-form-login" style={{textAlign: "center", marginTop: 10}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Số CMT/CCCD</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Số CMT/CCCD</h5>
                                         <Field type="text" className="form-control" name="citizenNumber"
                                                style={{textAlign: "center"}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Giới Tính</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Giới Tính</h5>
                                         <Field as="select" name="gender.id" className="form-control" id="gender">
                                             <option>------------</option>
                                             {gender.map((c) => (
                                                 <option value={c.id}>{c.name}</option>
                                             ))}
                                         </Field>
-                                        <h5 style={{fontFamily: "inherit" }}>Quốc Gia</h5>
-                                            <select name={'address.wards.district.city.id'}  onChange={(e) => {
-                                                const textCountry = e.target.value;
-                                                setIdCountry(textCountry)
-                                            }} className={"form-select"}>
-                                                <option>--Chọn Quốc Gia--</option>
-                                                {country.map((c) => {
-                                                    return (
-                                                        <option value={c.id}>{c.name}</option>
-                                                    )
-                                                })}
-                                            </select>
-                                        <h5 style={{fontFamily: "inherit" }}>Thanh Pho</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Quốc Gia</h5>
+                                        <select name={'address.wards.district.city.id'} onChange={(e) => {
+                                            const textCountry = e.target.value;
+                                            setIdCountry(textCountry)
+                                        }} className={"form-select"}>
+                                            <option>--Chọn Quốc Gia--</option>
+                                            {country.map((c) => {
+                                                return (
+                                                    <option value={c.id}>{c.name}</option>
+                                                )
+                                            })}
+                                        </select>
+                                        <h5 style={{fontFamily: "inherit"}}>Thanh Pho</h5>
                                         <Field as="select" name="city.id" className="form-control" id="gender">
                                             <option>------------</option>
                                             {city.map((c) => (
                                                 <option value={c.id}>{c.name}</option>
                                             ))}
                                         </Field>
-                                        <h5 style={{fontFamily: "inherit" }}>chiều cao</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>chiều cao</h5>
                                         <Field type="text" className="form-control" name="height" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Cân nặng</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Cân nặng</h5>
                                         <Field type="text" className="form-control" name="weight" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Sở thích</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Sở thích</h5>
                                         <Field type="text" className="form-control" name="hobby" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Mô tả bản thân</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Mô tả bản thân</h5>
                                         <Field type="text" className="form-control" name="description"
                                                id="email-form-login" style={{textAlign: "center"}}/>
-                                        <h5 style={{fontFamily: "inherit" }}>Yêu cầu đối với người thuê</h5>
+                                        <h5 style={{fontFamily: "inherit"}}>Yêu cầu đối với người thuê</h5>
                                         <Field type="text" className="form-control" name="requestToUser"
                                                id="email-form-login" style={{textAlign: "center"}}/>
                                         <div className="modal-footer d-flex justify-content-center">
@@ -342,7 +345,6 @@ export function HomeProfileLover() {
                                    data-bs-toggle={"modal"}
                                    data-bs-target={"#edit-info-profile-user"}>
                                 </i>
-
                             </div>
                             {service.map((service) => {
                                 return (
@@ -355,6 +357,7 @@ export function HomeProfileLover() {
                                     </>
                                 )
                             })}
+                            <Link to={"/listBillOfProfileLover/" + idAccount}>Danh sách đơn thuê của bạn</Link>
                         </div>
                         <div className={"top-donate-info"}>
                             <div style={{
@@ -520,7 +523,9 @@ export function HomeProfileLover() {
                             <Formik
                                 initialValues={profileLover}
                                 enableReinitialize={true}
-                                onSubmit={(values) =>{updatePriceProfileLover(values)}}
+                                onSubmit={(values) => {
+                                    updatePriceProfileLover(values)
+                                }}
                             >
                                 <Form>
                                     <Field name={"price"}

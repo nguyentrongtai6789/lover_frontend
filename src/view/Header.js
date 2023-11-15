@@ -83,14 +83,17 @@ export function Header(props) {
 
                                 {(idAccount !== 0 && role === "ROLE_LOVER") &&
                                     <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>
-                                        Profile lover</Link>}
+                                        Trang lover</Link>}
+                                {(idAccount !== 0 && role === "ROLE_ADMIN") &&
+                                    <Link to={"/layout-admin/home/" + idAccount} style={{textDecoration: "none"}}>
+                                        Trang Admin</Link>}
                                 {(idAccount === null) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
-                                }}>Profile lover</a>}
+                                }}>Trang lover</a>}
                                 {(idAccount !== null && role === "ROLE_USER") &&
                                     <a className="nav-link scrollto" href="#" onClick={() => {
                                         alert("Bạn chưa đăng kí tài khoản lover!")
-                                    }}>Profile lover</a>}
+                                    }}>Trang lover</a>}
                             </li>
 
                             <li style={{position: 'relative'}}>
