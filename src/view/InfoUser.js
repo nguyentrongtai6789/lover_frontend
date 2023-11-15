@@ -1,5 +1,5 @@
 import {Link, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {findByIdAccount} from "../Service/InfoUserService"
 import {} from '../css/profileUser.css'
 import {storage} from "../firebase/Firebase";
@@ -9,6 +9,7 @@ import {RingLoader} from "react-spinners";
 import {updateAvatar, updateInfo} from "../Service/InfoUserService"
 import {Field, Form, Formik} from "formik";
 import {findAllByAccountUserId, deleteById} from "../Service/BillService";
+import {AppContext} from "../context/AppContext";
 
 export function InfoUser() {
     const {id} = useParams(); //idAccountUser
@@ -26,6 +27,7 @@ export function InfoUser() {
     const token = localStorage.getItem("token")
     const [loading, setLoading] = useState(false)
     const [checkDeleted, setCheckDeleted] = useState(false);
+
     useEffect(() => {
         findAllByAccountUserId(id)
             .then((res) => {

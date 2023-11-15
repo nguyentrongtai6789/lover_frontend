@@ -24,6 +24,7 @@ export function FormLogin(props) {
         password: Yup.string().required('Vui lòng nhập mật khẩu!').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/, "Mật khẩu phải chứa tối thiểu 8 kí tự, ít nhất 1 chữ cái viết thường, ít nhất một chữ cái viết hoa, ít nhất một chữ số!"),
         password2: Yup.string().required("Vui lòng nhập lại mật khẩu").oneOf([Yup.ref('password'), null], 'Mật khẩu không khớp'),
     });
+
     function showFormRegis() {
         document.getElementById("content-form-login").style.display = "none";
         document.getElementById("content-form-forgot-password").style.display = "none";
@@ -55,12 +56,18 @@ export function FormLogin(props) {
             props.m(true);
             props.n(res.data.id)
             props.l(res.data.roles[0].authority)
-            navigate("/")
+            if (res.data.roles[0].authority === "ROLE_ADMIN") {
+                navigate("/layout-admin/home/" + res.data.id)
+                alert("Ok")
+            } else {
+                navigate("/")
+            }
         }).catch(() => {
             // trường hợp kết nối được đến máy chủ nhưng tài khoản hoặc mật khẩu không đúng:
             alert("Tài khoản hoặc mật khẩu không đúng!")
         })
     }
+
     function sendCode() {
         let email = document.getElementById("email-form-forgot-password").value;
         if (email === "") {
@@ -70,11 +77,12 @@ export function FormLogin(props) {
         axios.post("http://localhost:8080/api/sendCodeToEmail2/" + email).then((res) => {
             alert(res.data);
             setLoading1(false)
-        }).catch(()=>{
+        }).catch(() => {
             alert("Địa chỉ email không đúng!")
             setLoading1(false)
         })
     }
+
     function changePassword(account) {
         let code = document.getElementById("code-email-verification-2").value;
         if (code === "") {
@@ -90,6 +98,7 @@ export function FormLogin(props) {
             alert("Không thể kết nối đến máy chủ!")
         }
     }
+
     return (
         <>
             <div className="modal fade login" id="exampleModalCenter" tabIndex="-1" role="dialog"
@@ -119,12 +128,14 @@ export function FormLogin(props) {
                                                    placeholder={"Mật khẩu"} name={"password"}
                                                    style={{textAlign: "center", marginTop: 10}}/>
                                             <div className="modal-footer d-flex justify-content-center">
-                                                <button type="submit" className="btn btn-secondary" id={"button-login-1"} data-bs-dismiss="modal">Đăng nhập</button>
+                                                <button type="submit" className="btn btn-secondary"
+                                                        id={"button-login-1"} data-bs-dismiss="modal">Đăng nhập
+                                                </button>
                                             </div>
                                         </Form>
                                     </Formik>
                                 </div>
-                                <div className="text-center" style={{marginTop:40,display: "flex"}}>
+                                <div className="text-center" style={{marginTop: 40, display: "flex"}}>
                                     <a href="#" className="nav-link scrollto">
                                         <span className="register-link" onClick={showFormRegis}
                                               style={{paddingLeft: 10, color: "#f0564a"}}>Đăng ký tài khoản</span>
@@ -146,7 +157,8 @@ export function FormLogin(props) {
                                         validationSchema={validationSchema}
                                     >
                                         <Form>
-                                            <Field type="text" className={"form-control"} id={"email-form-forgot-password"}
+                                            <Field type="text" className={"form-control"}
+                                                   id={"email-form-forgot-password"}
                                                    placeholder={"Nhập địa chỉ email đã đăng kí"}
                                                    name={"email"} style={{textAlign: "center"}}/>
                                             <ErrorMessage name="email"/>
@@ -176,7 +188,7 @@ export function FormLogin(props) {
                                 <div className="text-center" style={{marginBottom: 10, display: "flex"}}>
                                     <a href="#" className="nav-link scrollto">
                                         <span className="register-link" onClick={hiddenFormRegis}
-                                              style={{paddingLeft:15, color: "#f0564a"}}>Đăng nhập</span>
+                                              style={{paddingLeft: 15, color: "#f0564a"}}>Đăng nhập</span>
                                     </a>
                                     <a href="#" className="nav-link scrollto">
                                         <span className="register-link" onClick={showFormRegis}
@@ -189,7 +201,8 @@ export function FormLogin(props) {
                         <div id={"footer-form-register"} style={{marginBottom: 5, display: "none"}}>
                             <div className="text-center" style={{display: "flex"}}>
                                 <a href="#" className="nav-link scrollto" style={{paddingLeft: 10, color: "#f0564a"}}>
-                                    <span className="register-link" onClick={hiddenFormRegis} style={{color: "#f0564a"}}>Đăng nhập</span>
+                                    <span className="register-link" onClick={hiddenFormRegis}
+                                          style={{color: "#f0564a"}}>Đăng nhập</span>
                                 </a>
                                 <a href="#" className="nav-link scrollto" style={{paddingLeft: 290}}>
                                     <span className="register-link" onClick={forgetPassword} style={{color: "#f0564a"}}>Quên mật khẩu</span>
@@ -203,6 +216,7 @@ export function FormLogin(props) {
 
         </>
     )
+
     function Button1({loading1}) {
         if (loading1) {
             return (
@@ -216,6 +230,7 @@ export function FormLogin(props) {
             <></>
         )
     }
+
     function Button2({loading2}) {
         if (loading2) {
             return (

@@ -7,6 +7,10 @@ export const AppProvider = ({children}) => {
     const [idVipService, setIdVipService] = useState(0);
     const [idFreeService, setIdFreeService] = useState(0);
     const [idBaseService, setIdBaseService] = useState(0);
+    const [check, setCheck] = useState(false);
+    const handleChangeCheck = (value) => {
+        setCheck(!value)
+    }
     const handleSearchChange = (value) => {
         setSearchValue(value)
         setIdVipService(0)
@@ -37,6 +41,8 @@ export const AppProvider = ({children}) => {
             idVipService,
             idFreeService,
             idBaseService,
+            check,
+            handleChangeCheck,
             handleFreeServiceChange,
             handleIdVipServiceChange,
             handleSearchChange,
