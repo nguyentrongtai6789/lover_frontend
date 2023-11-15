@@ -273,13 +273,13 @@ export function HomeProfileLover() {
                                         <h5>Cân nặng</h5>
                                         <Field type="text" className="form-control" name="weight" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Sở thích</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Sở thích</h5>
                                         <Field type="text" className="form-control" name="hobby" id="email-form-login"
                                                style={{textAlign: "center"}}/>
-                                        <h5>Mô tả bản thân</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Mô tả bản thân</h5>
                                         <Field type="text" className="form-control" name="description"
                                                id="email-form-login" style={{textAlign: "center"}}/>
-                                        <h5>Yêu cầu đối với người thuê</h5>
+                                        <h5 style={{fontFamily: "inherit" }}>Yêu cầu đối với người thuê</h5>
                                         <Field type="text" className="form-control" name="requestToUser"
                                                id="email-form-login" style={{textAlign: "center"}}/>
                                         <div className="modal-footer d-flex justify-content-center">
@@ -501,7 +501,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={handleSubmit}>Submit</button>
+                                <button onClick={handleSubmit} class="btn btn-danger">Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
@@ -527,7 +527,7 @@ export function HomeProfileLover() {
                                            className={"form-control"}></Field>
                                     <div style={{textAlign: "center", marginTop: 10}}>
                                         <button className="btn btn-secondary" id={"button-update-price-profile-user"}
-                                                type={"submit"} data-bs-dismiss="modal"
+                                                type={"submit"} data-bs-dismiss="modal" class="btn btn-danger"
                                         >Cập nhật
                                         </button>
                                     </div>
@@ -559,7 +559,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={updateFreeService}>Submit</button>
+                                <button onClick={updateFreeService} class="btn btn-danger">Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
@@ -587,7 +587,7 @@ export function HomeProfileLover() {
                                         <label htmlFor={`service-${service.id}`}>{service.name}</label>
                                     </div>
                                 ))}
-                                <button onClick={updateVipService}>Submit</button>
+                                <button onClick={updateVipService} class="btn btn-danger"> Cập nhật</button>
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
