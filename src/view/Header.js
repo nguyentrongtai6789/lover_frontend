@@ -81,7 +81,7 @@ export function Header(props) {
 
                             <li>
                                 {(idAccount !== null && role === "ROLE_LOVER") &&
-                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>Trang lover</Link>}
+                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>Trang llover</Link>}
                                 {(idAccount === null) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
                                 }}>Trang lover</a>}
