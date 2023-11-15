@@ -71,7 +71,7 @@ export function Header(props) {
             <header id="header" className="fixed-top d-flex align-items-center header-transparent">
                 <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-                    <div className="logo me-auto" style={{marginLeft: 5}}>
+                    <div className="logo me-auto" style={{marginLeft: 60}}>
                         <h1><a href="http://localhost:3000/"><img
                             src="https://files.playerduo.net/production/static-files/logo.png" alt="Logo"/></a></h1>
                     </div>
@@ -80,17 +80,16 @@ export function Header(props) {
                         <ul>
 
                             <li>
-
-                                {(idAccount !== 0 && role === "ROLE_LOVER") &&
-                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>
-                                        Profile lover</Link>}
+                                {(idAccount !== null && role === "ROLE_LOVER") &&
+                                    <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>Trang lover</Link>}
                                 {(idAccount === null) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
-                                }}>Profile lover</a>}
+                                }}>Trang lover</a>}
                                 {(idAccount !== null && role === "ROLE_USER") &&
                                     <a className="nav-link scrollto" href="#" onClick={() => {
                                         alert("Bạn chưa đăng kí tài khoản lover!")
-                                    }}>Profile lover</a>}
+                                    }}>Trang lover</a>}
+                                {role === "ROLE_ADMIN" &&  <Link to={"/home-admin/" + idAccount} style={{textDecoration: "none"}}>Trang Admin</Link>}
                             </li>
 
                             <li style={{position: 'relative'}}>

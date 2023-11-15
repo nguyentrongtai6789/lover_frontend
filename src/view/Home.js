@@ -79,43 +79,38 @@ export function Home() {
         <>
             <div className="container-home-user" id={"container-home-user"}>
                 <div className="row">
-                    {currentProducts.map((item) => (
-                        <div className={"info-lover-home"} >
+                    {currentProducts.map((item) => {
+                        return (<div className={"info-lover-home"}>
                             <Link to={"/info-lover/" + item.id}>
-                                <div className="image-container">
-                                    <img
-                                        src={item.avatarImage}
-                                        className="img-fluid"
-                                        alt={item.avatarImage}
-                                        style={{ width: 200, height: 280 }}
-                                    />
-                                </div>
+                                <img src={item.avatarImage}
+                                     className="img-fluid" alt={item.avatarImage}
+                                     style={{width: 200, height: 280}}/>
                             </Link>
-                            <div className="details-container">
-                                <h6
-                                    style={{
-                                        marginLeft: "150px",
-                                        backgroundColor: "#f0564a",
-                                        fontFamily: "inherit",
-                                        borderRadius: "20%",
-                                    }}
-                                >
-                                    {item.price}/h
-                                </h6>
-                                <span style={{ marginTop: 0, fontWeight: "bold" }}>{item.account?.nickname}</span>
+                            <div style={{width: 200}}>
+                                <h6 style={{letterSpacing: 2}}>{item.price}/h</h6>
+                                <span style={{marginTop: 0, fontWeight: "bold"}}>
+                                        {item.account?.nickname}
+                                </span>
                                 <div className={"like-comment-rate-home"}>
-                                    <span style={{ marginRight: 5 }}>{item.averageRateScore}<i className={"bi bi-star-fill"} style={{ color: "orange" }}></i></span>
+                                    <span style={{marginRight: 5}}>10<i className={"bi bi-heart-fill"}
+                                                                        style={{color: "red"}}></i></span>
+                                    <span style={{marginRight: 5}}>22<i className={"bi bi-chat-dots"}
+                                                                        style={{color: "blue"}}></i></span>
+                                    <span style={{marginRight: 5}}>{item.averageRateScore}<i
+                                        className={"bi bi-star-fill"}
+                                        style={{color: "orange"}}></i></span>
                                 </div>
                                 <div className={"container-game-icon"}>
-                                    <img src="assets/img/game-icon/lol-logo.jpg" alt="" className={"game-icon"} />
-                                    <img src="assets/img/game-icon/pubg-mobile-logo.jpg" alt="" className={"game-icon"} />
-                                    <img src="assets/img/game-icon/toc-chien-logo.jpg" alt="" className={"game-icon"} />
-                                    <img src="assets/img/game-icon/valorant-logo.png" alt="" className={"game-icon"} />
+                                    <img src="assets/img/game-icon/lol-logo.jpg" alt="" className={"game-icon"}/>
+                                    <img src="assets/img/game-icon/pubg-mobile-logo.jpg" alt=""
+                                         className={"game-icon"}/>
+                                    <img src="assets/img/game-icon/toc-chien-logo.jpg" alt="" className={"game-icon"}/>
+                                    <img src="assets/img/game-icon/valorant-logo.png" alt="" className={"game-icon"}/>
                                     <span className={"game-of-player-plus"}>+5</span>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        </div>)
+                    })}
                 </div>
                 <Pagination
                     activePage={currentPage}
@@ -123,10 +118,6 @@ export function Home() {
                     totalItemsCount={profileLovers.length}
                     onChange={handlePageChange}
                 />
-                <div >
-                    <img src="https://playerduo.net/favicons/popup-chat.png" style={{paddingLeft: "1100px"}}/>
-                </div>
-
             </div>
 
         </>)
