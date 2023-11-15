@@ -83,7 +83,7 @@ export function Header(props) {
 
                                 {(idAccount !== 0 && role === "ROLE_LOVER") &&
                                     <Link to={"/homeProfileLover/" + idAccount} style={{textDecoration: "none"}}>
-                                        <i className="bi bi-person-hearts" style={{ fontSize : "30px" , color: "#EE0DB9FF"}}></i> </Link>}
+                                        Profile lover</Link>}
                                 {(idAccount === null) && <a className="nav-link scrollto" href="#" onClick={() => {
                                     alert("Bạn chưa đăng nhập")
                                 }}>Profile lover</a>}
