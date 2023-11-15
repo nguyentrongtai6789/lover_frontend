@@ -122,7 +122,11 @@ export function Home() {
                     itemsCountPerPage={profilePerPage}
                     totalItemsCount={profileLovers.length}
                     onChange={handlePageChange}
+                    itemClass="page-item"
+                    linkClass="page-link"
                 />
+
+
                 <div >
                     <img src="https://playerduo.net/favicons/popup-chat.png" style={{paddingLeft: "1100px"}}/>
                 </div>
