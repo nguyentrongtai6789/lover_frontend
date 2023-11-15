@@ -1,8 +1,10 @@
 import "../css/InfoLover.css"
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {findByIdLover, findImagesByIdLover} from "../Service/InfoLoverService"
+import {useNavigate, useParams} from "react-router-dom";
+import {findByIdLover, findImagesByIdLover, createBill} from "../Service/InfoLoverService"
 import {Demo} from "./Demo";
+import {Field, Form, Formik} from "formik";
+import {parseCSS} from "@testing-library/jest-dom/dist/utils";
 
 export function InfoLover() {
     const [profileLover, setProfileLover] = useState({})
@@ -12,6 +14,25 @@ export function InfoLover() {
     const [baseService, setBaseService] = useState([])
     const [linkFb, setLinkFb] = useState("")
     const [images, setImages] = useState([])
+    const [idAccount, setIdAccount] = useState(localStorage.getItem("idAccount"));
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [bill, setBill] = useState({
+        time: "",
+        accountUser: {
+            id: 0,
+        },
+        accountLover: {
+            id: 0,
+        },
+        vipServices: [0],
+        totalMoney: 0,
+        statusBill: {
+            id: 1
+        },
+    })
+    const [moneyTime, setMoneyTime] = useState(0)
     useEffect(() => {
         findByIdLover(id)
             .then((res) => {
@@ -28,7 +49,66 @@ export function InfoLover() {
                 setImages(res)
             })
     }, [id])
-    console.log(images)
+
+    function changeTime(time) {
+        setMoneyTime(time * profileLover.price)
+        bill.time = time;
+        let total = bill.totalMoney - moneyTime;
+        total += time * profileLover.price;
+        setBill({...bill, totalMoney: total})
+    }
+
+
+    function rentLover() {
+        if (idAccount === null) {
+            return alert("Bạn chưa đăng nhập!")
+        }
+        if (bill.time === "") {
+            return alert("Bạn chưa chọn giờ!")
+        }
+        bill.accountLover.id = +profileLover.account.id;
+        bill.accountUser.id = +idAccount;
+        createBill(bill, token)
+            .then(() => {
+            }).catch(() => {
+            alert("Lỗi kết nối!")
+        })
+        console.log(bill)
+    }
+
+    const [selectedOptions, setSelectedOptions] = useState([]); // Mảng chứa các lựa chọn đã chọn
+
+    function handleCheckboxChange(event) {
+        let selectedOption = event.target.value; // Giá trị của checkbox đã thay đổi
+        if (event.target.checked) {
+            // Nếu checkbox được chọn, thêm lựa chọn vào mảng
+            selectedOptions.push(selectedOption);
+        } else {
+            // Nếu checkbox bị bỏ chọn, loại bỏ lựa chọn khỏi mảng
+            let index = selectedOptions.indexOf(selectedOption);
+            if (index > -1) {
+                selectedOptions.splice(index, 1);
+            }
+        }
+        let arr = [];
+        for (let i = 0; i < vipService.length; i++) {
+            for (let j = 0; j < selectedOptions.length; j++) {
+                if (vipService[i].id == selectedOptions[j]) {
+                    arr.push(vipService[i]);
+                }
+            }
+        }
+        let money = 0;
+        for (let i = 0; i < arr.length; i++) {
+            money += arr[i].price
+        }
+        money += moneyTime;
+        bill.totalMoney = money;
+        console.log(bill.totalMoney)
+        setBill({...bill, vipServices: arr})
+        console.log(arr)
+    }
+
     return (
         <>
             <div className="container-info">
@@ -76,9 +156,100 @@ export function InfoLover() {
                         Ngày tham gia: {profileLover.createdAt}
                     </div>
                     <div className={"image-info-action"}>
-                        <button className={"btn-info-action"}>
-                            <i className="bi bi-currency-dollar">THUÊ</i>
-                        </button>
+
+                        {idAccount === null &&
+                            <button className={"btn-info-action"}>
+                                <i className="bi bi-currency-dollar"
+                                   onClick={() => {
+                                       alert("Bạn chưa đăng nhập")
+                                   }}>THUÊ</i>
+                            </button>}
+                        {(idAccount !== null && +idAccount !== +profileLover.account?.id && profileLover.statusLover?.id ===1) &&
+                            <button className={"btn-info-action"}>
+                                <i className="bi bi-currency-dollar"
+                                   data-bs-toggle={"modal"}
+                                   data-bs-target={"#form-rent-lover"}>THUÊ</i>
+                            </button>}
+                        {(idAccount !== null && +idAccount !== +profileLover.account?.id && profileLover.statusLover?.id !==1) &&
+                            <button className={"btn-info-action"}>
+                                <i className="bi bi-currency-dollar"
+                                   onClick={()=>{alert("Lover không thể cung cấp dịch vụ lúc này!")}}>THUÊ</i>
+                            </button>}
+                        <div className="modal fade" id="form-rent-lover" tabIndex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div className="modal-dialog modal-dialog-centered" role="document">
+                                <div className="modal-content" id={"modal-content-rent-lover"}>
+                                    <div className="modal-header" style={{textAlign: "center", display: "inline"}}>
+                                        <span style={{fontSize: 25, color: "black"}}>THUÊ LOVER</span>
+                                    </div>
+                                    <div className="modal-body" id={"modal-body-rent-lover"}>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>Tên lover:</td>
+                                                <td>{profileLover.account?.nickname}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thời gian muốn thuê:</td>
+                                                <td>
+                                                    <select name="" id="" onChange={(e) => {
+                                                        changeTime(e.target.value)
+                                                    }}>
+                                                        <option value="">Chọn giờ</option>
+                                                        <option value="1">1 giờ</option>
+                                                        <option value="2">2 giờ</option>
+                                                        <option value="3">3 giờ</option>
+                                                        <option value="4">4 giờ</option>
+                                                        <option value="5">5 giờ</option>
+                                                        <option value="24">1 ngày</option>
+                                                        <option value="48">2 ngày</option>
+                                                        <option value="168">1 tuần</option>
+                                                        <option value="336">2 tuần</option>
+                                                        <option value="720">1 tháng</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Chọn dịch vụ VIP:</td>
+                                                <td>
+                                                    {vipService.map((item) => {
+                                                        return (
+                                                            <>
+                                                                <label htmlFor="">
+                                                                    <input type="checkbox"
+                                                                           id={"check" + item.id}
+                                                                           value={item.id}
+                                                                        // checked={vipServicesChecked.some((s) => s.id === item.id)}
+                                                                        // onChange={(event) => changeVipServices(event, item)}
+                                                                        //  onChange={getMoneyVipService}
+                                                                           onChange={handleCheckboxChange}
+                                                                    />
+                                                                    {item.name} ({item.price}vnđ)
+                                                                </label>
+                                                                <br/>
+                                                            </>
+
+                                                        )
+                                                    })}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tổng tiền:</td>
+                                                <td>{bill.totalMoney} vnđ</td>
+                                            </tr>
+                                            <tr>
+                                                <td colSpan={2} style={{textAlign: "center"}}>
+                                                    <button type={"button"} onClick={rentLover}>Thanh toán</button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div className="modal-footer d-flex justify-content-between">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <button className={"btn-info-action"}>
                             <i className="bi bi-database-fill">DONATE</i>
                         </button>
