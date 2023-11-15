@@ -6,7 +6,7 @@ import {storage} from "../firebase/Firebase";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
 import {RingLoader} from "react-spinners";
-import {updateAvatar, updateInfo} from "../Service/InfoUserService"
+import {updateAvatar, updateInfo, userRegisterToLover} from "../Service/InfoUserService"
 import {Field, Form, Formik} from "formik";
 import {findAllByAccountUserId, deleteById} from "../Service/BillService";
 import {AppContext} from "../context/AppContext";
@@ -34,7 +34,7 @@ export function InfoUser() {
                 setBills(res)
                 console.log(bills)
             })
-    }, [id,checkDeleted])
+    }, [id, checkDeleted])
 
     function showImage() {
         const fileInput = document.getElementById('input-avatar-profile-user');
@@ -84,6 +84,15 @@ export function InfoUser() {
                 setCheckDeleted(!checkDeleted)
             })
         }
+    }
+
+    function registerToLover() {
+        userRegisterToLover(id, token)
+            .then((res) => {
+                alert(res)
+            }).catch(()=>{
+                alert("Không thể kết nối đến máy chủ!")
+        })
     }
 
     if (loading) {
@@ -203,7 +212,7 @@ export function InfoUser() {
                                         </table>}
                                 </span>
                             </div>
-                            <a href="#">Đăng kí tài khoản lover</a>
+                            <a href="#" onClick={registerToLover}>Đăng kí tài khoản lover</a>
                         </div>
                     </div>
                     <hr/>

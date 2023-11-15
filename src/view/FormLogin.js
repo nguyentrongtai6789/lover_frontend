@@ -58,7 +58,6 @@ export function FormLogin(props) {
             props.l(res.data.roles[0].authority)
             if (res.data.roles[0].authority === "ROLE_ADMIN") {
                 navigate("/layout-admin/home/" + res.data.id)
-                alert("Ok")
             } else {
                 navigate("/")
             }
