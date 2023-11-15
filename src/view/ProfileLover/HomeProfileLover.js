@@ -108,6 +108,10 @@ export function HomeProfileLover() {
                 profileUser.avatarImage = url;
                const updatedProfileLover = {
                     ...profileLover,
+
+                   account:{
+                       id:id,
+                   },
                     avatarImage:url}
                 createProfileLover(updatedProfileLover)
                     .then(() => {
@@ -126,6 +130,10 @@ export function HomeProfileLover() {
     const updatePriceProfileLover = (values) => {
         const updatedProfileLover = {
             ...profileLover,
+
+            account:{
+                id:id,
+            },
             price: values.price,
         }
         updateProfileLover(updatedProfileLover, navigate, id).then(() => {
