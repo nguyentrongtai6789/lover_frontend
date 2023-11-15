@@ -1,17 +1,4 @@
-import {useEffect, useState} from "react";
-import {findFirstImage} from "../Service/InfoLoverService"
-
-
 export function Demo(props) {
-    const [image, setImage] = useState("")
-    useEffect(() => {
-        findFirstImage(props.id)
-            .then((res) => {
-                console.log(res)
-                setImage(res)
-            })
-    },[props.id])
-
     function showDemo() {
         let imgFeature = document.querySelector(".image-main")
         let listImg = document.querySelectorAll(".list-img img")
@@ -59,14 +46,14 @@ export function Demo(props) {
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="main">
-                            <img src={image.urlImage} className="image-main" alt=""/>
+                            <img src={props.img[0]?.urlImage} className="image-main" alt=""/>
                             <div className={"control prev"}><i className="bi bi-chevron-left"></i></div>
                             <div className={"control next"}><i className="bi bi-chevron-right"></i></div>
                         </div>
                         <div className="list-img">
-                            {props.img.map((image) => {
+                            {props.img.map((i) => {
                                 return (
-                                    <div style={{margin: 5}}><img onClick={showDemo} src={image.urlImage}
+                                    <div style={{margin: 5}}><img onClick={showDemo} src={i.urlImage}
                                                                   className="image-in-list" alt=""/></div>
                                 )
                             })}
