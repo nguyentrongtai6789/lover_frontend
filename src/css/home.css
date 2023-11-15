@@ -16,3 +16,39 @@
     margin-bottom: 20px;
     text-align: center;
 }
+
+
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    justify-content: center; /* căn giữa nút phân trang */
+}
+
+/* CSS cho nút phân trang */
+.page-item {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* CSS cho liên kết trong nút phân trang */
+.page-link {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 3px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    cursor: pointer;
+    border-radius: 8px; /* làm cho nút tròn */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+
+}
+
+.page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* hiệu ứng đổ bóng */
+}
