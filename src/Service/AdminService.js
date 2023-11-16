@@ -9,8 +9,23 @@ export function findAllProfileUserByIdStatusUser(token) {
                 }
             }).then((res) => {
                 return res.data;
-            }).catch(()=>{
+            }).catch(() => {
                 return []
+            })
+        )
+    })
+}
+
+export function acceptUserToLover(idAccount, token) {
+    return new Promise((resolve) => {
+        resolve(
+            axios.get("http://localhost:8080/api/admin/acceptUserToLover/" + idAccount, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((res) => {
+                return res.data;
+            }).catch(() => {
             })
         )
     })
