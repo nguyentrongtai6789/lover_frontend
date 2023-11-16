@@ -17,7 +17,7 @@ export function Home() {
     const [profileLovers, setProfileLovers] = useState([]);
     // phân trang:
     const [currentPage, setCurrentPage] = useState(1);
-    const profilePerPage = 4; // Số sản phẩm hiển thị trên mỗi trang
+    const profilePerPage = 8; // Số sản phẩm hiển thị trên mỗi trang
     const indexOfLastProduct = currentPage * profilePerPage;
     const indexOfFirstProduct = indexOfLastProduct - profilePerPage;
     const currentProducts = profileLovers.slice(indexOfFirstProduct, indexOfLastProduct);

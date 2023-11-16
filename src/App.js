@@ -8,6 +8,7 @@ import {Home} from "./view/Home";
 import {HomeProfileLover} from "./view/ProfileLover/HomeProfileLover";
 import {HomeAdmin} from "./view/HomeAdmin";
 import {ListBillOfProfileLover} from "./view/ListBillOfProfileLover";
+import Home2 from "./view/Home2";
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         <>
                 <Routes>
                     <Route path={'/'} element={<Layout />}>
-                        <Route path={""} element={<Home />} ></Route>
+                        <Route path={""} element={<Home2 />} ></Route>
                         <Route path={'/homeProfileLover/:id'} element={<HomeProfileLover/>}></Route>
                         <Route path={'/info-lover/:id'} element={<InfoLover/>}></Route>
                         <Route path={'/info-user/:id'} element={<InfoUser/>}></Route>
