@@ -1,16 +1,25 @@
 import {useEffect, useState} from "react";
-import {findAllProfileUserByIdStatusUser} from "../Service/AdminService"
+import {acceptUserToLover, findAllProfileUserByIdStatusUser} from "../Service/AdminService"
 
 export function HomeAdmin() {
     const [account1s, setAccount1s] = useState([])
     const token = localStorage.getItem("token")
+    const [check, setCheck] = useState(false);
     useEffect(() => {
         findAllProfileUserByIdStatusUser()
             .then((res) => {
                 setAccount1s(res)
                 console.log(res)
             })
-    }, [])
+    }, [check])
+    function acceptUserRequest(accountUser) {
+        console.log(accountUser)
+        acceptUserToLover(accountUser.id, token)
+            .then((res)=>{
+                alert(res)
+                setCheck(!check)
+            })
+    }
     return (
         <>
             <p style={{marginTop: 100, fontSize: 20, fontWeight: "bold", textAlign: "center"}}>Danh sách tài khoản
@@ -40,7 +49,7 @@ export function HomeAdmin() {
                             <td>{item.citizenNumber}</td>
                             <td>{item.phoneNumber}</td>
                             <td>{item.account?.email}</td>
-                            <td><button className={"btn btn-primary"}>Xác nhận</button></td>
+                            <td><button className={"btn btn-primary"} onClick={()=>acceptUserRequest(item.account)}>Xác nhận</button></td>
                             <td><button className={"btn btn-danger"}>Huỷ</button></td>
                         </tr>
                     )
